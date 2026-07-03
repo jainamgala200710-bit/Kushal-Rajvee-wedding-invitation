@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preload" as="image" href="images/gate_bg.webp" type="image/webp" />
 </head>
 <body>
 
@@ -135,6 +136,13 @@
 
     <div class="envelope-wrapper" id="envelope-wrapper">
       <div class="palace-frame" id="palace-frame">
+        <!-- Separate Elephants for Mobile/Opening Animation -->
+        <div class="corner-elephant elephant-left">
+          <img src="images/elephant.webp" alt="Left Elephant" />
+        </div>
+        <div class="corner-elephant elephant-right">
+          <img src="images/elephant.webp" alt="Right Elephant" />
+        </div>
         
         <!-- Ornamental arch crown above doors -->
         <div class="arch-crown">✦ श्री ✦</div>
@@ -143,7 +151,7 @@
         <div class="palace-gate-container">
           <div class="gate-inner">
             <!-- Gate background with door area transparent -->
-            <img src="images/gate_bg.png" class="gate-bg-img" alt="Royal Palace" />
+            <img src="images/gate_bg.webp" class="gate-bg-img" alt="Royal Palace" />
             
             <!-- The Grand Palace Doors (3D Perspective) -->
             <div class="palace-doors" id="palace-doors">
@@ -188,7 +196,7 @@
           <div class="ornament orn-top"></div>
           <div class="ornament orn-bottom"></div>
           
-          <img class="welcome-ganesha" src="images/ganesha.png" alt="Ganesha" />
+          <img class="welcome-ganesha" src="images/ganesha.webp" alt="Ganesha" />
           
           <div class="shloka-container">
             <p class="shloka-line">॥ श्री गणेशाय नमः ॥</p>
@@ -226,11 +234,15 @@
       <div class="section-decor peacock-left">🦚</div>
       <div class="section-decor peacock-right">🦚</div>
       <div class="section-inner">
-        <h2 class="section-heading">The Happy Couple</h2>
-        <div class="couple-photo-frame">
-          <img id="couple-photo" class="couple-photo" src="images/couple.png" alt="Couple" />
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <h2 class="section-heading">The Happy Couple</h2>
+          <div class="couple-photo-frame">
+            <img id="couple-photo" class="couple-photo" src="images/couple.webp" alt="Couple" loading="lazy" />
+          </div>
+          <p class="couple-tagline" id="couple-tagline"></p>
         </div>
-        <p class="couple-tagline" id="couple-tagline"></p>
       </div>
     </section>
 
@@ -290,31 +302,35 @@
       <!-- Mandap dome decoration -->
       <div class="section-decor mandap-top">🛕</div>
       <div class="section-inner">
-        <h2 class="section-heading">Counting Down To The Big Day</h2>
-        <p class="countdown-subtitle" id="countdown-target-date"></p>
-        <div class="countdown-grid" id="countdown-grid">
-          <div class="countdown-box">
-            <span class="countdown-value" id="cd-months">00</span>
-            <span class="countdown-label">Months</span>
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <h2 class="section-heading">Counting Down To The Big Day</h2>
+          <p class="countdown-subtitle" id="countdown-target-date"></p>
+          <div class="countdown-grid" id="countdown-grid">
+            <div class="countdown-box">
+              <span class="countdown-value" id="cd-months">00</span>
+              <span class="countdown-label">Months</span>
+            </div>
+            <div class="countdown-box">
+              <span class="countdown-value" id="cd-days">00</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-box">
+              <span class="countdown-value" id="cd-hours">00</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-box">
+              <span class="countdown-value" id="cd-minutes">00</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-box">
+              <span class="countdown-value" id="cd-seconds">00</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
           </div>
-          <div class="countdown-box">
-            <span class="countdown-value" id="cd-days">00</span>
-            <span class="countdown-label">Days</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-value" id="cd-hours">00</span>
-            <span class="countdown-label">Hours</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-value" id="cd-minutes">00</span>
-            <span class="countdown-label">Minutes</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-value" id="cd-seconds">00</span>
-            <span class="countdown-label">Seconds</span>
-          </div>
+          <p class="countdown-tagline">✦ Every second brings us closer ✦</p>
         </div>
-        <p class="countdown-tagline">✦ Every second brings us closer ✦</p>
       </div>
     </section>
 
@@ -337,8 +353,12 @@
       <div class="section-decor vine-left"></div>
       <div class="section-decor vine-right"></div>
       <div class="section-inner">
-        <h2 class="section-heading">Wedding Celebrations</h2>
-        <div class="events-grid" id="events-grid"></div>
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <h2 class="section-heading">Wedding Celebrations</h2>
+          <div class="events-grid" id="events-grid"></div>
+        </div>
       </div>
     </section>
 
@@ -375,7 +395,7 @@
             <div class="venue-card-royal">
               <!-- Palace Arch Venue Photo -->
               <div class="venue-photo-container">
-                <img id="venue-photo" class="venue-photo" src="images/venue.png" alt="Venue" />
+                <img id="venue-photo" class="venue-photo" src="images/venue.webp" alt="Venue" loading="lazy" />
                 <div class="venue-light-glow"></div>
               </div>
               
@@ -435,8 +455,12 @@
       <div class="section-decor elephant-deco left">🐘</div>
       <div class="section-decor elephant-deco right">🐘</div>
       <div class="section-inner">
-        <h2 class="section-heading">With Blessings Of</h2>
-        <div class="family-grid" id="family-grid"></div>
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <h2 class="section-heading">With Blessings Of</h2>
+          <div class="family-grid" id="family-grid"></div>
+        </div>
       </div>
     </section>
 

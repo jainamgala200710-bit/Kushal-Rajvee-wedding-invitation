@@ -587,11 +587,11 @@ img {
 }
 
 .left-door-img {
-  background-image: url('images/door_left.png');
+  background-image: url('images/door_left.webp');
 }
 
 .right-door-img {
-  background-image: url('images/door_right.png');
+  background-image: url('images/door_right.webp');
 }
 
 /* Invisible center handle click target with glow ring */
@@ -1019,31 +1019,59 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px);
+  padding: clamp(25px, 5vw, 50px) clamp(12px, 3vw, 24px);
   position: relative;
   overflow: hidden;
   perspective: 1200px;
-  /* Luxury card background with optimized overlay for readability */
-  background:
-    linear-gradient(180deg, rgba(255,253,245,0.88) 0%, rgba(255,253,245,0.8) 50%, rgba(255,253,245,0.88) 100%),
-    url('images/card_bg.png') center / cover no-repeat;
-  background-color: #FFFDF5;
+  /* Soft, clean ivory paper texture backdrop */
+  background: #FFFDF9;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(253, 248, 235, 0.5) 100%);
 }
 
 .inv-section:nth-child(even) {
-  background:
-    linear-gradient(180deg, rgba(253,249,240,0.92) 0%, rgba(255,254,248,0.85) 50%, rgba(253,249,240,0.92) 100%),
-    url('images/card_bg.png') center / cover no-repeat;
-  background-color: #FDF9F0;
+  background: #FCF8F0;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(248, 242, 225, 0.5) 100%);
 }
 
+/* Separate elephants hidden on desktop by default */
+.corner-elephant {
+  display: none;
+}
+
+/* GPU Acceleration for smooth transitions */
+.door, .corner-elephant, .section-inner, .peacock-feathers-bg {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Stacking Context Fix & Phone constraints */
 .section-inner {
-  max-width: 600px;
+  position: relative;
+  z-index: 2;
+  max-width: 1000px; /* Expanded grid-centric section width for a grander layout */
   width: 100%;
   text-align: center;
   opacity: 0;
   transform: translateY(40px);
   transform-style: preserve-3d;
+  margin: 0 auto;
+}
+
+/* Compact width overrides for text-centric sections */
+#sec-welcome .section-inner,
+#sec-couple-photo .section-inner,
+#sec-save-the-date .section-inner,
+#sec-message .section-inner {
+  max-width: 720px;
+}
+
+/* Defensive text wrapping to prevent collisions */
+.section-heading, .bride-name, .groom-name, .venue-title, .countdown-subtitle {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .section-inner.revealed {
@@ -1056,12 +1084,12 @@ img {
 
 .section-heading {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  font-size: clamp(1.15rem, 3.2vw, 1.55rem);
   font-weight: 400;
   color: var(--gold-dark);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   position: relative;
 }
 .section-heading::after {
@@ -1075,19 +1103,25 @@ img {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   FLORAL BORDER — Ornamental frame
+   FLORAL BORDER — Premium Royal Card Template
    ═══════════════════════════════════════════════════════════════ */
 
 .floral-border {
   position: relative;
-  padding: clamp(40px, 8vw, 80px) clamp(30px, 6vw, 60px);
-  border: 2px solid var(--gold);
-  border-radius: var(--radius);
-  background: linear-gradient(180deg, #FFFFFF, #FDFAF2);
+  padding: clamp(35px, 8vw, 65px) clamp(22px, 5vw, 42px);
+  border-radius: 16px;
+  /* Load template with a 15% lighter overlay so the background details are more visible while keeping text readable */
+  background: 
+    linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 50%, rgba(255, 253, 245, 0.70) 100%),
+    url('images/card_template.webp') no-repeat;
+  background-size: 100% 100%;
   box-shadow:
-    0 0 0 6px #FFFFFF,
-    0 0 0 8px rgba(212,175,55,0.3),
-    0 20px 60px rgba(0,0,0,0.06);
+    inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
+    0 15px 45px rgba(0,0,0,0.06),
+    0 0 0 4px #FFFFFF,
+    0 0 0 6px rgba(212,175,55,0.25);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .ornament {
@@ -1510,14 +1544,21 @@ img {
 .venue-floral.bottom-right { bottom: 18px; right: 18px; }
 
 .venue-card-royal {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FDFAF3 60%, #F8F2E2 100%);
-  border: 1px dashed rgba(212, 175, 55, 0.45);
+  background: 
+    linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 100%),
+    url('images/card_template.webp') no-repeat;
+  background-size: 100% 100%;
   border-radius: calc(var(--radius) - 6px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding-bottom: 2rem;
+  box-shadow:
+    inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
+    0 10px 30px rgba(0,0,0,0.06),
+    0 0 0 4px #FFFFFF,
+    0 0 0 6px rgba(212,175,55,0.2);
 }
 
 /* Photo with palace-inspired arch crop and warm glow */
@@ -2100,7 +2141,7 @@ img {
   padding: 1rem 0;
   background:
     linear-gradient(180deg, rgba(255,253,245,0.9) 0%, rgba(255,248,231,0.85) 50%, rgba(255,253,245,0.9) 100%),
-    url('images/card_bg.png') center / cover no-repeat;
+    url('images/card_bg.webp') center / cover no-repeat;
   background-color: #FFFDF5;
   position: relative;
 }
@@ -2177,8 +2218,141 @@ img {
 }
 
 
-/* ── Responsive: hide heavy decorations on small screens ── */
+/* ── Responsive Columns for Events Grid ────────────────── */
+@media (min-width: 768px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  .events-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Dedicated Mobile Hero Section (max-width: 768px) ── */
+@media (max-width: 768px) {
+  /* 100vh viewport constraint & zero horizontal scroll */
+  .envelope-scene {
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  
+  .envelope-wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .palace-frame {
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    backdrop-filter: none;
+    animation: none; /* Disable vertical floating on mobile for stable layout positioning */
+  }
+
+  /* Center the gate container at 78% viewport height */
+  .palace-gate-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 78vh;
+    height: 78dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible; /* Let sides overflow screen width */
+    z-index: 2;
+  }
+
+  /* Keep aspect ratio exactly 1024:683 */
+  .gate-inner {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1024 / 683;
+    max-height: 100%;
+    position: relative;
+    transform: none !important;
+  }
+
+  .gate-bg-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; /* Keep Retina artwork crisp */
+  }
+
+  /* Logo / Title top positioning (5% height spacing) */
+  .arch-crown {
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 1.15rem;
+    z-index: 10;
+  }
+
+  /* "Enter Royal Palace" button bottom positioning with 35px margin */
+  .tap-hint {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 0.95rem;
+    z-index: 10;
+  }
+
+  /* Enable and position separate elephants elegantly inside screen borders */
+  .corner-elephant {
+    display: block !important;
+    position: absolute;
+    bottom: 12.5vh; /* Align with the base of the gate */
+    width: 28vw; /* Proportional sizing */
+    max-width: 110px;
+    z-index: 5; /* Sit in front of gate */
+  }
+
+  .elephant-left {
+    left: 12px;
+    transform: scaleX(-1) translateZ(0); /* Face inward + hardware acceleration */
+  }
+
+  .elephant-right {
+    right: 12px;
+    transform: translateZ(0); /* Face inward + hardware acceleration */
+  }
+}
+
+/* ── Mobile Layout Adjustments (max-width: 480px) ── */
 @media (max-width: 480px) {
+  /* Prevent countdown wrapping shifts on small viewports */
+  .countdown-grid {
+    gap: 6px;
+  }
+  .countdown-box {
+    min-width: 54px;
+    padding: 0.5rem 0.2rem;
+  }
+  .countdown-value {
+    font-size: 1.4rem;
+  }
+  .countdown-label {
+    font-size: 0.6rem;
+  }
+
+  /* Hide heavy decorations on small screens */
   .peacock-left,
   .peacock-right {
     font-size: 2rem;
@@ -2197,3 +2371,4 @@ img {
     opacity: 0.25;
   }
 }
+

@@ -14,7 +14,7 @@ const CONFIG = {
   groomParents: "Son of Falguni & Rajinikanath Gindra",
   welcomeInviteText: "With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of",
   coupleTagline: "Two souls, one beautiful journey",
-  couplePhoto: "images/couple.png",   // Replace with your engagement photo
+  couplePhoto: "images/couple.webp",   // Replace with your engagement photo
 
   // ── Wedding Date & Time ─────────────────────────────
   weddingDay: "Wednesday",
@@ -25,7 +25,7 @@ const CONFIG = {
   // ── Venue ───────────────────────────────────────────
   venueName: "Rajvee & Kushal Wedding Venue",
   venueAddress: "JK Mehta Rd,\nSantacruz (West),\nMumbai,\nMaharashtra 400054",
-  venuePhoto: "images/venue.png",     // Replace with your venue photo
+  venuePhoto: "images/venue.webp",     // Replace with your venue photo
   venueMapLink: "https://www.google.com/maps/dir/?api=1&destination=JK+Mehta+Rd,+Santacruz+(West),+Mumbai,+Maharashtra+400054",
 
   // ── Wedding Events ──────────────────────────────────
@@ -325,8 +325,8 @@ function drawPetal(ctx, p) {
   ctx.rotate(p.rotation);
   ctx.globalAlpha = p.opacity;
 
-  // Apply depth-of-field blur
-  if (p.blur > 0) {
+  // Apply depth-of-field blur (disabled on mobile for performance)
+  if (p.blur > 0 && window.innerWidth >= 768) {
     ctx.filter = `blur(${p.blur}px)`;
   } else {
     ctx.filter = "none";
@@ -678,10 +678,11 @@ function openEnvelope() {
     duration: 1.0,
   }, "-=1.0");
 
-  // Step 7: Hide envelope scene, show invitation scene
+  // Step 7: Hide envelope scene, show invitation scene, stop sparkles loop
   tl.call(() => {
     envelopeScene.style.display = "none";
     invitationScene.style.display = "block";
+    sparklesActive = false; // permanently stop envelope sparkles animation loop
     // Trigger section reveals with staggered timing
     revealInvitationSections();
   });
@@ -1201,5 +1202,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     scratchObserver.observe(invitationScene, { attributes: true, attributeFilter: ["style"] });
   }
+
+  // Page Visibility API to pause animations when tab is hidden
+  let petalsActiveTemp = petalsActive;
+  let sparklesActiveTemp = sparklesActive;
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      petalsActiveTemp = petalsActive;
+      sparklesActiveTemp = sparklesActive;
+      petalsActive = false;
+      sparklesActive = false;
+    } else {
+      if (typeof petalsActiveTemp !== 'undefined') petalsActive = petalsActiveTemp;
+      if (typeof sparklesActiveTemp !== 'undefined') sparklesActive = sparklesActiveTemp;
+      if (petalsActive) updatePetals();
+      if (sparklesActive) updateSparkles();
+    }
+  });
+
+  // Re-initialize scratch card on window resize to prevent canvas stretching
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (!scratchRevealed && scratchCanvas && scratchCard) {
+        const rect = scratchCard.getBoundingClientRect();
+        if (Math.abs(scratchCanvas.width - rect.width) > 5 || Math.abs(scratchCanvas.height - rect.height) > 5) {
+          initScratchCard();
+        }
+      }
+    }, 200);
+  });
 });
 
