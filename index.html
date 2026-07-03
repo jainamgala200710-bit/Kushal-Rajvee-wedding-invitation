@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation — You're Cordially Invited</title>
+  <meta name="description" content="An elegant wedding invitation — you are cordially invited to celebrate with us." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+  <!-- Reusable SVG Asset Definitions -->
+  <svg style="display: none;">
+    <defs>
+      <!-- Antique gold metallic gradient -->
+      <linearGradient id="goldFeatherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFE89C" />
+        <stop offset="20%" stop-color="#D4AF37" />
+        <stop offset="50%" stop-color="#C5952A" />
+        <stop offset="75%" stop-color="#AA821C" />
+        <stop offset="100%" stop-color="#55400D" />
+      </linearGradient>
+      <!-- Lighter highlight gradient for eye center -->
+      <radialGradient id="goldEyeGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFE89C" />
+        <stop offset="50%" stop-color="#D4AF37" />
+        <stop offset="100%" stop-color="#8C6D1F" />
+      </radialGradient>
+      <!-- Dark ring gradient -->
+      <radialGradient id="darkEyeGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1a1a1a" />
+        <stop offset="100%" stop-color="#0a0a0a" />
+      </radialGradient>
+      
+      <g id="peacock-feather-def">
+        <!-- Outermost eye halo -->
+        <path d="M100,30 C55,95 55,155 100,180 C145,155 145,95 100,30 Z" fill="url(#goldFeatherGrad)" opacity="0.4"/>
+        <!-- Outer eye ring -->
+        <path d="M100,45 C65,100 65,148 100,170 C135,148 135,100 100,45 Z" fill="url(#goldFeatherGrad)" opacity="0.7"/>
+        <!-- Dark ring -->
+        <path d="M100,58 C75,100 75,138 100,155 C125,138 125,100 100,58 Z" fill="url(#darkEyeGrad)" opacity="0.95"/>
+        <!-- Inner gold ring -->
+        <path d="M100,70 C82,100 82,130 100,145 C118,130 118,100 100,70 Z" fill="url(#goldFeatherGrad)" opacity="0.85"/>
+        <!-- Deep dark pupil -->
+        <ellipse cx="100" cy="115" rx="10" ry="14" fill="#080808" opacity="0.95"/>
+        <!-- Bright gold dot at center -->
+        <circle cx="100" cy="113" r="6" fill="url(#goldEyeGrad)"/>
+        <!-- Tiny light spark -->
+        <circle cx="97" cy="109" r="2" fill="#FFE89C" opacity="0.9"/>
+        
+        <!-- Feather stem — elegant curve -->
+        <path d="M100,170 Q103,260 106,350 Q108,380 110,410" stroke="url(#goldFeatherGrad)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <!-- Subtle double-line stem highlight -->
+        <path d="M100,172 Q103,262 106,352" stroke="rgba(255,232,156,0.3)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        
+        <!-- Dense left side barbs (13 strands) -->
+        <path d="M100,170 C65,185 35,215 22,245" stroke="url(#goldFeatherGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M100,178 C60,198 30,232 18,265" stroke="url(#goldFeatherGrad)" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <path d="M101,188 C55,215 26,252 14,290" stroke="url(#goldFeatherGrad)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M101,198 C50,230 22,272 10,315" stroke="url(#goldFeatherGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M102,210 C48,248 20,292 8,340" stroke="url(#goldFeatherGrad)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M102,222 C45,262 18,310 6,360" stroke="url(#goldFeatherGrad)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <path d="M103,234 C42,278 16,328 5,380" stroke="url(#goldFeatherGrad)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M103,248 C40,295 18,345 8,395" stroke="url(#goldFeatherGrad)" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+        <path d="M104,262 C45,308 25,358 15,405" stroke="url(#goldFeatherGrad)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+        <path d="M104,276 C50,322 32,368 22,410" stroke="url(#goldFeatherGrad)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+        <!-- Whisper-thin left barbs -->
+        <path d="M100,174 C62,192 32,224 20,255" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.5"/>
+        <path d="M101,194 C52,222 24,262 12,302" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.45"/>
+        <path d="M102,216 C46,255 19,300 7,348" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.4"/>
+        
+        <!-- Dense right side barbs (13 strands) -->
+        <path d="M100,170 C135,185 165,215 178,245" stroke="url(#goldFeatherGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M100,178 C140,198 170,232 182,265" stroke="url(#goldFeatherGrad)" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <path d="M101,188 C145,215 174,252 186,290" stroke="url(#goldFeatherGrad)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M101,198 C150,230 178,272 190,315" stroke="url(#goldFeatherGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M102,210 C152,248 180,292 192,340" stroke="url(#goldFeatherGrad)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M102,222 C155,262 182,310 194,360" stroke="url(#goldFeatherGrad)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <path d="M103,234 C158,278 184,328 195,380" stroke="url(#goldFeatherGrad)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M103,248 C160,295 182,345 192,395" stroke="url(#goldFeatherGrad)" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+        <path d="M104,262 C155,308 175,358 185,405" stroke="url(#goldFeatherGrad)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+        <path d="M104,276 C150,322 168,368 178,410" stroke="url(#goldFeatherGrad)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+        <!-- Whisper-thin right barbs -->
+        <path d="M100,174 C138,192 168,224 180,255" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.5"/>
+        <path d="M101,194 C148,222 176,262 188,302" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.45"/>
+        <path d="M102,216 C154,255 181,300 193,348" stroke="url(#goldFeatherGrad)" stroke-width="0.7" fill="none" opacity="0.4"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- PERSISTENT LAYERS — Particles & Music              -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <canvas id="petals-canvas"></canvas>
+  <canvas id="sparkles-canvas"></canvas>
+  <canvas id="dust-canvas"></canvas>
+
+
+  <audio id="bg-music" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SCENE 1 — THE ROYAL PALACE ENTRANCE                -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div id="envelope-scene" class="scene envelope-scene palace-scene">
+    <!-- Atmospheric layers -->
+    <div class="sunset-glow"></div>
+    <div class="light-burst" id="light-burst"></div>
+    <div class="volumetric-rays"></div>
+    <div class="volumetric-rays rays-secondary"></div>
+
+    <!-- Large background peacock feather fans -->
+    <div class="peacock-feathers-bg left-feathers">
+      <svg class="feather f-1" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-2" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-3" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-4" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-5" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+    </div>
+    <div class="peacock-feathers-bg right-feathers">
+      <svg class="feather f-1" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-2" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-3" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-4" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+      <svg class="feather f-5" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
+    </div>
+
+    <div class="envelope-wrapper" id="envelope-wrapper">
+      <div class="palace-frame" id="palace-frame">
+        
+        <!-- Ornamental arch crown above doors -->
+        <div class="arch-crown">✦ श्री ✦</div>
+
+        <!-- The Luxury Wedding Entrance Container -->
+        <div class="palace-gate-container">
+          <div class="gate-inner">
+            <!-- Gate background with door area transparent -->
+            <img src="images/gate_bg.png" class="gate-bg-img" alt="Royal Palace" />
+            
+            <!-- The Grand Palace Doors (3D Perspective) -->
+            <div class="palace-doors" id="palace-doors">
+              <div class="door left-door" id="left-door">
+                <div class="door-panel-img left-door-img"></div>
+              </div>
+              <div class="door right-door" id="right-door">
+                <div class="door-panel-img right-door-img"></div>
+              </div>
+              
+              <!-- Glowing brass handle seal in the center (used as tap trigger and GSAP target) -->
+              <div class="envelope-seal" id="envelope-seal">
+                <div class="handle-glow-ring"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tap hint -->
+        <p class="tap-hint" id="tap-hint">✦ Enter Royal Palace ✦</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SCENE 2 — THE INVITATION                           -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div id="invitation-scene" class="scene invitation-scene">
+
+    <!-- Section: Welcome (Ganesha & Shloka & Names) -->
+    <section class="inv-section" id="sec-welcome">
+      <!-- Decorative corner florals -->
+      <div class="section-decor corner-floral tl">🌺</div>
+      <div class="section-decor corner-floral tr">🌺</div>
+      <div class="section-decor corner-floral bl">🌸</div>
+      <div class="section-decor corner-floral br">🌸</div>
+      <!-- Side vine decorations -->
+      <div class="section-decor vine-left"></div>
+      <div class="section-decor vine-right"></div>
+      <div class="section-inner">
+        <div class="floral-border welcome-card-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          
+          <img class="welcome-ganesha" src="images/ganesha.png" alt="Ganesha" />
+          
+          <div class="shloka-container">
+            <p class="shloka-line">॥ श्री गणेशाय नमः ॥</p>
+            <p class="shloka-text">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥</p>
+          </div>
+          
+          <p class="welcome-invite-text" id="welcome-invite-text"></p>
+          
+          <div class="couple-names-container">
+            <h2 class="bride-name" id="bride-name"></h2>
+            <p class="welcome-ampersand">&amp;</p>
+            <h2 class="groom-name" id="groom-name"></h2>
+          </div>
+          
+          <p class="parents-info" id="parents-info"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">🌸</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌺</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌸</span>
+    </div>
+
+    <!-- Section: Couple Photo -->
+    <section class="inv-section" id="sec-couple-photo">
+      <div class="section-decor corner-floral tl">❀</div>
+      <div class="section-decor corner-floral tr">❀</div>
+      <div class="section-decor corner-floral bl">✿</div>
+      <div class="section-decor corner-floral br">✿</div>
+      <div class="section-decor peacock-left">🦚</div>
+      <div class="section-decor peacock-right">🦚</div>
+      <div class="section-inner">
+        <h2 class="section-heading">The Happy Couple</h2>
+        <div class="couple-photo-frame">
+          <img id="couple-photo" class="couple-photo" src="images/couple.png" alt="Couple" />
+        </div>
+        <p class="couple-tagline" id="couple-tagline"></p>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">💮</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">🏵️</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">💮</span>
+    </div>
+
+    <!-- Section: Save The Date (Scratch Card) -->
+    <section class="inv-section" id="sec-save-the-date">
+      <div class="section-decor corner-floral tl">🌸</div>
+      <div class="section-decor corner-floral tr">🌸</div>
+      <div class="section-decor corner-floral bl">🌺</div>
+      <div class="section-decor corner-floral br">🌺</div>
+      <div class="section-decor elephant-deco left">🐘</div>
+      <div class="section-decor elephant-deco right">🐘</div>
+      <div class="section-inner">
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <p class="inv-label">✦ Save The Date ✦</p>
+
+          <!-- Scratch card area -->
+          <div class="scratch-card" id="scratch-card">
+            <!-- The hidden date revealed after scratching -->
+            <div class="scratch-reveal" id="scratch-reveal">
+              <p class="scratch-date-day" id="scratch-day"></p>
+              <p class="scratch-date-full" id="scratch-date"></p>
+            </div>
+            <!-- Canvas overlay the user scratches away -->
+            <canvas id="scratch-canvas" class="scratch-canvas"></canvas>
+          </div>
+          <p class="scratch-hint" id="scratch-hint">✦ Scratch to reveal the date ✦</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">🌸</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌺</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌸</span>
+    </div>
+
+    <!-- Section: Countdown Timer -->
+    <section class="inv-section" id="sec-countdown">
+      <div class="section-decor corner-floral tl">❀</div>
+      <div class="section-decor corner-floral tr">❀</div>
+      <div class="section-decor corner-floral bl">❀</div>
+      <div class="section-decor corner-floral br">❀</div>
+      <!-- Mandap dome decoration -->
+      <div class="section-decor mandap-top">🛕</div>
+      <div class="section-inner">
+        <h2 class="section-heading">Counting Down To The Big Day</h2>
+        <p class="countdown-subtitle" id="countdown-target-date"></p>
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="countdown-box">
+            <span class="countdown-value" id="cd-months">00</span>
+            <span class="countdown-label">Months</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="cd-days">00</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="cd-hours">00</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="cd-minutes">00</span>
+            <span class="countdown-label">Minutes</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="cd-seconds">00</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
+        </div>
+        <p class="countdown-tagline">✦ Every second brings us closer ✦</p>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">💮</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">🏵️</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">💮</span>
+    </div>
+
+
+    <!-- Section: Events -->
+    <section class="inv-section" id="sec-events">
+      <div class="section-decor corner-floral tl">🌸</div>
+      <div class="section-decor corner-floral tr">🌸</div>
+      <div class="section-decor corner-floral bl">🌺</div>
+      <div class="section-decor corner-floral br">🌺</div>
+      <div class="section-decor vine-left"></div>
+      <div class="section-decor vine-right"></div>
+      <div class="section-inner">
+        <h2 class="section-heading">Wedding Celebrations</h2>
+        <div class="events-grid" id="events-grid"></div>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">🌸</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌺</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌸</span>
+    </div>
+
+    <!-- Section: Venue -->
+    <section class="inv-section" id="sec-venue">
+      <div class="section-decor corner-floral tl">❀</div>
+      <div class="section-decor corner-floral tr">❀</div>
+      <div class="section-decor corner-floral bl">✿</div>
+      <div class="section-decor corner-floral br">✿</div>
+      <div class="section-decor peacock-left">🦚</div>
+      <div class="section-decor peacock-right">🦚</div>
+      <div class="section-inner venue-section-inner">
+        <h2 class="section-heading" id="venue-heading">Wedding Venue</h2>
+        <p class="venue-subtitle">We look forward to celebrating this special day with you.</p>
+        
+        <div class="venue-container">
+          <!-- Left: Palace Venue Card -->
+          <div class="venue-card-wrapper">
+            <!-- Floral ornaments at corners -->
+            <div class="venue-floral top-left">❀</div>
+            <div class="venue-floral top-right">❀</div>
+            <div class="venue-floral bottom-left">❀</div>
+            <div class="venue-floral bottom-right">❀</div>
+            
+            <div class="venue-card-royal">
+              <!-- Palace Arch Venue Photo -->
+              <div class="venue-photo-container">
+                <img id="venue-photo" class="venue-photo" src="images/venue.png" alt="Venue" />
+                <div class="venue-light-glow"></div>
+              </div>
+              
+              <div class="venue-info">
+                <!-- Animated Location Pin Icon -->
+                <div class="venue-pin-container">
+                  <div class="venue-pin-glow"></div>
+                  <span class="venue-pin-icon">📍</span>
+                </div>
+                
+                <h3 class="venue-title" id="venue-name-display">Rajvee & Kushal Wedding Venue</h3>
+                
+                <address class="venue-address-display" id="venue-address-display">
+                  JK Mehta Rd,<br>
+                  Santacruz (West),<br>
+                  Mumbai,<br>
+                  Maharashtra 400054
+                </address>
+                
+                <a class="venue-directions-btn" href="https://www.google.com/maps/dir/?api=1&destination=JK+Mehta+Rd,+Santacruz+(West),+Mumbai,+Maharashtra+400054" target="_blank">
+                  📍 Get Directions
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right: Interactive Google Map -->
+          <div class="venue-map-container">
+            <iframe 
+              class="venue-map-iframe"
+              src="https://maps.google.com/maps?q=JK%20Mehta%20Rd,%20Santacruz%20(West),%20Mumbai,%20Maharashtra%20400054&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">💮</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">🏵️</span>
+      <span class="garland-leaf">🍃</span>
+      <span class="garland-flower">💮</span>
+    </div>
+
+    <!-- Section: Family -->
+    <section class="inv-section" id="sec-family">
+      <div class="section-decor corner-floral tl">🌸</div>
+      <div class="section-decor corner-floral tr">🌸</div>
+      <div class="section-decor corner-floral bl">🌸</div>
+      <div class="section-decor corner-floral br">🌸</div>
+      <div class="section-decor elephant-deco left">🐘</div>
+      <div class="section-decor elephant-deco right">🐘</div>
+      <div class="section-inner">
+        <h2 class="section-heading">With Blessings Of</h2>
+        <div class="family-grid" id="family-grid"></div>
+      </div>
+    </section>
+
+    <!-- Garland Divider -->
+    <div class="garland-divider">
+      <span class="garland-flower">🌸</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌺</span>
+      <span class="garland-leaf">🌿</span>
+      <span class="garland-flower">🌸</span>
+    </div>
+
+    <!-- Section: Invitation Message -->
+    <section class="inv-section" id="sec-message">
+      <div class="section-decor corner-floral tl">❀</div>
+      <div class="section-decor corner-floral tr">❀</div>
+      <div class="section-decor corner-floral bl">✿</div>
+      <div class="section-decor corner-floral br">✿</div>
+      <div class="section-decor vine-left"></div>
+      <div class="section-decor vine-right"></div>
+      <div class="section-inner">
+        <div class="floral-border">
+          <div class="ornament orn-top"></div>
+          <div class="ornament orn-bottom"></div>
+          <p class="invitation-msg" id="invitation-msg"></p>
+        </div>
+        <p class="footer-blessing">♥ We can't wait to celebrate with you ♥</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
