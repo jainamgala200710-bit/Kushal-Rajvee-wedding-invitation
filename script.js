@@ -109,7 +109,7 @@ if (bgMusic) {
   bgMusic.src = "music.mp3?v=" + Date.now();
   bgMusic.addEventListener("loadedmetadata", () => {
     if (!musicInitialized) {
-      bgMusic.currentTime = 25;
+      bgMusic.currentTime = 15;
       musicInitialized = true;
     }
   });
@@ -212,7 +212,7 @@ function toggleMusic() {
     if (musicIcon) musicIcon.textContent = "♫";
   } else {
     if (!musicInitialized) {
-      bgMusic.currentTime = 25;
+      bgMusic.currentTime = 15;
       musicInitialized = true;
     }
     bgMusic.play().catch(() => {});
@@ -232,7 +232,7 @@ if (musicBtn) {
 function startMusic() {
   if (bgMusic && !musicPlaying && CONFIG.musicAutoplay) {
     if (!musicInitialized) {
-      bgMusic.currentTime = 25;
+      bgMusic.currentTime = 15;
       musicInitialized = true;
     }
     bgMusic.play().then(() => {
@@ -1093,10 +1093,10 @@ function flowerPopperBurst(cx, cy) {
     }
   }, intervalTime);
 
-  // Stop spawning after 10 seconds
+  // Stop spawning after 4 seconds
   setTimeout(() => {
     clearInterval(rainInterval);
-  }, 10000);
+  }, 4000);
 }
 
 // ── Countdown Timer Logic ─────────────────────────────

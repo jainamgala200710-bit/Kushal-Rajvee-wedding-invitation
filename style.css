@@ -1110,6 +1110,7 @@ img {
   position: relative;
   padding: clamp(35px, 8vw, 65px) clamp(22px, 5vw, 42px);
   border-radius: 16px;
+  border: 2.5px solid var(--gold); /* Added crisp theme-gold border */
   /* Load template with a 15% lighter overlay so the background details are more visible while keeping text readable */
   background: 
     linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 50%, rgba(255, 253, 245, 0.70) 100%),
@@ -1119,7 +1120,7 @@ img {
     inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
     0 15px 45px rgba(0,0,0,0.06),
     0 0 0 4px #FFFFFF,
-    0 0 0 6px rgba(212,175,55,0.25);
+    0 0 0 6px var(--gold); /* Updated to match theme gold precisely */
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -1549,6 +1550,7 @@ img {
     url('images/card_template.webp') no-repeat;
   background-size: 100% 100%;
   border-radius: calc(var(--radius) - 6px);
+  border: 2px solid var(--gold); /* Added crisp theme-gold border */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1558,7 +1560,7 @@ img {
     inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
     0 10px 30px rgba(0,0,0,0.06),
     0 0 0 4px #FFFFFF,
-    0 0 0 6px rgba(212,175,55,0.2);
+    0 0 0 6px var(--gold); /* Match theme gold precisely */
 }
 
 /* Photo with palace-inspired arch crop and warm glow */
