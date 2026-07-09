@@ -50,6 +50,7 @@ body {
   color: var(--maroon-deep);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 img {
@@ -1027,6 +1028,9 @@ img {
   background: #FFFDF9;
   background-image: 
     radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(253, 248, 235, 0.5) 100%);
+  /* Performance: skip rendering off-screen sections */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
 }
 
 .inv-section:nth-child(even) {
@@ -1110,19 +1114,50 @@ img {
   position: relative;
   padding: clamp(35px, 8vw, 65px) clamp(22px, 5vw, 42px);
   border-radius: 16px;
-  border: 2.5px solid var(--gold); /* Added crisp theme-gold border */
-  /* Load template with a 15% lighter overlay so the background details are more visible while keeping text readable */
+  /* Ornate outer border — gold gradient instead of flat solid */
+  border: 2.5px solid transparent;
+  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
+  border-image-slice: 1;
+  /* Load template background */
   background: 
     linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 50%, rgba(255, 253, 245, 0.70) 100%),
     url('images/card_template.webp') no-repeat;
   background-size: 100% 100%;
   box-shadow:
-    inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
+    inset 0 0 20px rgba(184, 150, 46, 0.12),
     0 15px 45px rgba(0,0,0,0.06),
-    0 0 0 4px #FFFFFF,
-    0 0 0 6px var(--gold); /* Updated to match theme gold precisely */
+    0 0 0 5px #FFFDF5,
+    0 0 0 7px var(--gold),
+    0 0 0 9px #FFFDF5,
+    0 0 0 10px rgba(212,175,55,0.35);
   overflow: hidden;
   box-sizing: border-box;
+}
+
+/* Inner filigree dashed border inset */
+.floral-border::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.5px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Corner ornamental gold gradient accents */
+.floral-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse 80px 80px at 0% 0%, rgba(212,175,55,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 80px at 100% 0%, rgba(212,175,55,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 80px at 0% 100%, rgba(212,175,55,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 80px at 100% 100%, rgba(212,175,55,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .ornament {
@@ -1435,17 +1470,39 @@ img {
 
 .event-card {
   background: linear-gradient(180deg, #FFFFFF, #FDF9F0);
-  border: 1.5px solid var(--gold);
+  border: 1.5px solid transparent;
+  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
+  border-image-slice: 1;
   border-radius: var(--radius);
   padding: clamp(1.2rem, 4vw, 2rem);
   text-align: center;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 4px 20px rgba(212,175,55,0.08);
+  box-shadow:
+    inset 0 0 12px rgba(212,175,55,0.06),
+    0 4px 20px rgba(212,175,55,0.08),
+    0 0 0 3px #FFFDF5,
+    0 0 0 4.5px rgba(212,175,55,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inner dashed filigree inset on event cards */
+.event-card::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  border-radius: calc(var(--radius) - 5px);
+  pointer-events: none;
 }
 
 .event-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(212,175,55,0.15);
+  box-shadow:
+    inset 0 0 15px rgba(212,175,55,0.1),
+    0 12px 40px rgba(212,175,55,0.15),
+    0 0 0 3px #FFFDF5,
+    0 0 0 4.5px var(--gold);
 }
 
 .event-emoji {
@@ -1550,17 +1607,21 @@ img {
     url('images/card_template.webp') no-repeat;
   background-size: 100% 100%;
   border-radius: calc(var(--radius) - 6px);
-  border: 2px solid var(--gold); /* Added crisp theme-gold border */
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
+  border-image-slice: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding-bottom: 2rem;
   box-shadow:
-    inset 0 0 15px rgba(184, 150, 46, 0.15), /* Engraved letterpress depression */
+    inset 0 0 20px rgba(184, 150, 46, 0.12),
     0 10px 30px rgba(0,0,0,0.06),
-    0 0 0 4px #FFFFFF,
-    0 0 0 6px var(--gold); /* Match theme gold precisely */
+    0 0 0 5px #FFFDF5,
+    0 0 0 7px var(--gold),
+    0 0 0 9px #FFFDF5,
+    0 0 0 10px rgba(212,175,55,0.35);
 }
 
 /* Photo with palace-inspired arch crop and warm glow */
@@ -1856,7 +1917,9 @@ img {
   max-width: 110px;
   aspect-ratio: 1;
   background: linear-gradient(135deg, #FFFFFF 0%, #FDF9F0 100%);
-  border: 1.5px solid var(--gold);
+  border: 1.5px solid transparent;
+  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
+  border-image-slice: 1;
   border-radius: 12px;
   padding: 0.8rem 0.5rem;
   display: flex;
@@ -1864,8 +1927,10 @@ img {
   justify-content: center;
   align-items: center;
   box-shadow: 
+    inset 0 0 12px rgba(212, 175, 55, 0.06),
     0 10px 25px rgba(212, 175, 55, 0.1),
-    inset 0 0 15px rgba(212, 175, 55, 0.05);
+    0 0 0 3px #FFFDF5,
+    0 0 0 4.5px rgba(212,175,55,0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -1874,17 +1939,19 @@ img {
 .countdown-box::before {
   content: '';
   position: absolute;
-  inset: 2px;
+  inset: 4px;
   border: 1px dashed rgba(212, 175, 55, 0.3);
-  border-radius: 10px;
+  border-radius: 8px;
   pointer-events: none;
 }
 
 .countdown-box:hover {
   transform: translateY(-5px);
   box-shadow: 
+    inset 0 0 15px rgba(212, 175, 55, 0.1),
     0 15px 30px rgba(212, 175, 55, 0.2),
-    inset 0 0 20px rgba(212, 175, 55, 0.1);
+    0 0 0 3px #FFFDF5,
+    0 0 0 4.5px var(--gold);
 }
 
 .countdown-value {
