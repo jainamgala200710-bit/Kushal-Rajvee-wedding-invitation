@@ -1191,6 +1191,18 @@ document.addEventListener("DOMContentLoaded", () => {
   populateContent();
   initCountdown();
 
+  // Dynamic injection of royal card corner ornaments
+  document.querySelectorAll(".floral-border, .venue-card-royal").forEach(card => {
+    if (!card.querySelector(".card-corner")) {
+      const positions = ['tl', 'tr', 'bl', 'br'];
+      positions.forEach(pos => {
+        const corner = document.createElement("div");
+        corner.className = `card-corner ${pos}`;
+        card.appendChild(corner);
+      });
+    }
+  });
+
   // Initialize scratch card once the invitation scene is visible
   if (invitationScene) {
     const scratchObserver = new MutationObserver(() => {
