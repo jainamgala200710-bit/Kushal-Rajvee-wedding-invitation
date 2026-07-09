@@ -1119,22 +1119,22 @@ img {
   position: relative;
   padding: clamp(35px, 8vw, 65px) clamp(22px, 5vw, 42px);
   border-radius: 16px;
-  /* Ornate outer border — gold gradient instead of flat solid */
-  border: 2.5px solid transparent;
-  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
-  border-image-slice: 1;
-  /* Load template background */
+  /* Thin floral gold vines border */
+  border: 10px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M 0,15 Q 15,5 30,15' stroke='%23D4AF37' stroke-width='1.5' fill='none'/%3E%3Cpath d='M 0,15 Q 15,25 30,15' stroke='%23B8962E' stroke-width='1' fill='none'/%3E%3Cpath d='M 8,10 Q 5,5 10,7 Z' fill='%23B8962E'/%3E%3Cpath d='M 22,20 Q 25,25 20,23 Z' fill='%23B8962E'/%3E%3Ccircle cx='15' cy='15' r='2' fill='%23FFE89C'/%3E%3C/svg%3E") 10 round;
+  /* Load template background with central mandala engraving */
   background: 
     linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 50%, rgba(255, 253, 245, 0.70) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg stroke='%23D4AF37' stroke-width='0.5' fill='none' opacity='0.08'%3E%3Ccircle cx='100' cy='100' r='90'/%3E%3Ccircle cx='100' cy='100' r='75' stroke-dasharray='3,3'/%3E%3Ccircle cx='100' cy='100' r='60'/%3E%3Ccircle cx='100' cy='100' r='45' stroke-dasharray='2,2'/%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='100' r='15'/%3E%3Cpath d='M100 10 L100 190 M10 100 H190 M36.36 36.36 L163.64 163.64 M36.36 163.64 L163.64 36.36'/%3E%3Cpath d='M100 100 L165.27 61.73 M100 100 L34.73 138.27 M100 100 L61.73 34.73 M100 100 L138.27 165.27 M100 100 L61.73 165.27 M100 100 L138.27 34.73 M100 100 L34.73 61.73 M100 100 L165.27 138.27'/%3E%3Ccircle cx='100' cy='100' r='82.5' stroke-dasharray='4,4'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(0 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(30 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(60 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(90 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(120 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(150 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(180 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(210 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(240 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(270 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(300 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(330 100 100)'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / min(450px, 80%) auto,
     url('images/card_template.webp') no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%, contain, 100% 100%;
   box-shadow:
     inset 0 0 20px rgba(184, 150, 46, 0.12),
     0 15px 45px rgba(0,0,0,0.06),
-    0 0 0 5px #FFFDF5,
-    0 0 0 7px var(--gold),
-    0 0 0 9px #FFFDF5,
-    0 0 0 10px rgba(212,175,55,0.35);
+    0 0 0 2px #FFFDF5,
+    0 0 0 4px var(--gold),
+    0 0 0 6px #FFFDF5,
+    0 0 0 7.5px rgba(212,175,55,0.35);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -1609,12 +1609,13 @@ img {
 .venue-card-royal {
   background: 
     linear-gradient(180deg, rgba(255, 253, 245, 0.70) 0%, rgba(255, 253, 245, 0.63) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg stroke='%23D4AF37' stroke-width='0.5' fill='none' opacity='0.08'%3E%3Ccircle cx='100' cy='100' r='90'/%3E%3Ccircle cx='100' cy='100' r='75' stroke-dasharray='3,3'/%3E%3Ccircle cx='100' cy='100' r='60'/%3E%3Ccircle cx='100' cy='100' r='45' stroke-dasharray='2,2'/%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='100' r='15'/%3E%3Cpath d='M100 10 L100 190 M10 100 H190 M36.36 36.36 L163.64 163.64 M36.36 163.64 L163.64 36.36'/%3E%3Cpath d='M100 100 L165.27 61.73 M100 100 L34.73 138.27 M100 100 L61.73 34.73 M100 100 L138.27 165.27 M100 100 L61.73 165.27 M100 100 L138.27 34.73 M100 100 L34.73 61.73 M100 100 L165.27 138.27'/%3E%3Ccircle cx='100' cy='100' r='82.5' stroke-dasharray='4,4'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(0 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(30 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(60 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(90 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(120 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(150 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(180 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(210 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(240 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(270 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(300 100 100)'/%3E%3Cpath d='M100 40 C90 60 110 60 100 40 Z' transform='rotate(330 100 100)'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / min(450px, 80%) auto,
     url('images/card_template.webp') no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%, contain, 100% 100%;
   border-radius: calc(var(--radius) - 6px);
-  border: 2px solid transparent;
-  border-image: linear-gradient(135deg, var(--gold-light), var(--gold-dark), var(--gold-shine), var(--gold-dark), var(--gold-light)) 1;
-  border-image-slice: 1;
+  /* Thin floral gold vines border */
+  border: 10px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M 0,15 Q 15,5 30,15' stroke='%23D4AF37' stroke-width='1.5' fill='none'/%3E%3Cpath d='M 0,15 Q 15,25 30,15' stroke='%23B8962E' stroke-width='1' fill='none'/%3E%3Cpath d='M 8,10 Q 5,5 10,7 Z' fill='%23B8962E'/%3E%3Cpath d='M 22,20 Q 25,25 20,23 Z' fill='%23B8962E'/%3E%3Ccircle cx='15' cy='15' r='2' fill='%23FFE89C'/%3E%3C/svg%3E") 10 round;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1623,10 +1624,10 @@ img {
   box-shadow:
     inset 0 0 20px rgba(184, 150, 46, 0.12),
     0 10px 30px rgba(0,0,0,0.06),
-    0 0 0 5px #FFFDF5,
-    0 0 0 7px var(--gold),
-    0 0 0 9px #FFFDF5,
-    0 0 0 10px rgba(212,175,55,0.35);
+    0 0 0 2px #FFFDF5,
+    0 0 0 4px var(--gold),
+    0 0 0 6px #FFFDF5,
+    0 0 0 7.5px rgba(212,175,55,0.35);
 }
 
 /* Photo with palace-inspired arch crop and warm glow */
@@ -2496,24 +2497,25 @@ img {
   100% { transform: rotate(1.5deg); }
 }
 
-/* Premium Ornate Corner Ornaments for all Wedding Cards */
+/* Premium Ornate Corner Ornaments (Royal Elephants) for all Wedding Cards */
 .card-corner {
   position: absolute;
-  width: clamp(35px, 6vw, 55px);
-  height: clamp(35px, 6vw, 55px);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 6 H94 V10 H22 C15.3726 10 10 15.3726 10 22 V94 H6 V6 Z' fill='%23D4AF37'/%3E%3Cpath d='M14 14 H82 V17 H25 C20.5817 17 17 20.5817 17 25 V82 H14 V14 Z' fill='%23B8962E'/%3E%3Cpath d='M25 25 C38 25 38 38 38 38 Q38 45 45 45 Q48 45 48 48 C48 50 45 52 42 52 C32 52 25 45 25 25 Z' fill='%23D4AF37'/%3E%3Ccircle cx='38' cy='38' r='4' fill='%23FFE89C'/%3E%3Cpath d='M20 20 H70 V22 H28 C23.5817 22 20 25.5817 20 30 V70 H22 V30 C22 25.5817 25.5817 22 30 22 H70 V20 H20 Z' fill='%23FFE89C'/%3E%3C/svg%3E");
+  width: clamp(40px, 7vw, 65px);
+  height: clamp(40px, 7vw, 65px);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M75 52 C75 45 70 38 60 38 C52 38 48 42 45 44 C42 46 36 43 32 46 C28 49 26 55 26 62 C26 67 28 70 32 70 C35 70 36 67 36 65 C36 62 34 60 36 57 C38 55 42 55 45 59 C47 63 47 70 51 70 C53 70 55 67 55 65 C55 62 53 60 56 57 C58 55 62 55 65 59 C67 63 67 70 71 70 C73 70 75 67 75 65 L75 52 Z' fill='%23D4AF37'/%3E%3Cpath d='M30 46 C24 43 20 35 24 30 C27 27 30 30 28 34 C26 38 32 40 34 42' stroke='%23D4AF37' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M48 40 C52 32 60 32 58 42 C56 52 48 48 48 40 Z' fill='%23B8962E'/%3E%3Cpath d='M50 42 H64 V52 C64 55 61 57 57 57 C53 57 50 55 50 52 V42 Z' fill='%23C5952A'/%3E%3Cpath d='M52 44 L62 50 M62 44 L52 50' stroke='%23FFE89C' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='57' cy='61' r='2' fill='%23FFE89C'/%3E%3Cline x1='57' y1='57' x2='57' y2='60' stroke='%23FFE89C' stroke-width='1'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 3;
   pointer-events: none;
-  opacity: 0.9;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  opacity: 0.95;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.12));
   transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .card-corner.tl {
   top: clamp(8px, 2vw, 16px);
   left: clamp(8px, 2vw, 16px);
+  transform: none;
 }
 
 .card-corner.tr {
@@ -2525,13 +2527,13 @@ img {
 .card-corner.bl {
   bottom: clamp(8px, 2vw, 16px);
   left: clamp(8px, 2vw, 16px);
-  transform: scaleY(-1);
+  transform: none;
 }
 
 .card-corner.br {
   bottom: clamp(8px, 2vw, 16px);
   right: clamp(8px, 2vw, 16px);
-  transform: scale(-1);
+  transform: scaleX(-1);
 }
 
 /* Elegant card-hover scale effect on corner pieces */
@@ -2541,16 +2543,16 @@ img {
 }
 
 .floral-border:hover .card-corner.tl,
-.venue-card-royal:hover .card-corner.tl { transform: translate(-2px, -2px); }
+.venue-card-royal:hover .card-corner.tl { transform: translate(2px, 2px); }
 
 .floral-border:hover .card-corner.tr,
-.venue-card-royal:hover .card-corner.tr { transform: scaleX(-1) translate(-2px, -2px); }
+.venue-card-royal:hover .card-corner.tr { transform: scaleX(-1) translate(2px, 2px); }
 
 .floral-border:hover .card-corner.bl,
-.venue-card-royal:hover .card-corner.bl { transform: scaleY(-1) translate(-2px, -2px); }
+.venue-card-royal:hover .card-corner.bl { transform: translate(2px, -2px); }
 
 .floral-border:hover .card-corner.br,
-.venue-card-royal:hover .card-corner.br { transform: scale(-1) translate(-2px, -2px); }
+.venue-card-royal:hover .card-corner.br { transform: scaleX(-1) translate(2px, -2px); }
 
 
 
