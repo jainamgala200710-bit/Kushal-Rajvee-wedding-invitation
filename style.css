@@ -595,23 +595,51 @@ img {
   background-image: url('images/door_right.webp');
 }
 
-/* Invisible center handle click target with glow ring */
+/* Elegant center monogram seal with glowing ring */
 .envelope-seal {
   position: absolute;
-  top: 50.5%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: clamp(140px, 18vw, 190px);
+  height: clamp(140px, 18vw, 190px);
   z-index: 10;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wedding-monogram-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(184, 150, 46, 0.45)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.25));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  animation: monogramPulse 3s ease-in-out infinite alternate;
+}
+
+.envelope-seal:hover .wedding-monogram-img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 10px 25px rgba(184, 150, 46, 0.6)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+}
+
+@keyframes monogramPulse {
+  0% {
+    transform: scale(0.98);
+    filter: drop-shadow(0 6px 16px rgba(184, 150, 46, 0.4)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.2)) brightness(1);
+  }
+  100% {
+    transform: scale(1.03);
+    filter: drop-shadow(0 12px 28px rgba(184, 150, 46, 0.55)) drop-shadow(0 0 18px rgba(212, 175, 55, 0.35)) brightness(1.08);
+  }
 }
 
 .handle-glow-ring {
   position: absolute;
-  inset: -12px;
+  inset: -25px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
   animation: handleRingPulse 2.5s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -728,32 +756,9 @@ img {
     inset 1px 1px 2px rgba(255,255,255,0.9);
 }
 
-/* ── Royal Handle (Center) ───────────────────────── */
-
-.envelope-seal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  width: 72px;
-  height: 72px;
-}
-
-/* Pulsing glow ring behind the handle */
-.handle-glow-ring {
-  position: absolute;
-  inset: -16px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
-  animation: handleRingPulse 2.5s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes handleRingPulse {
-  0%   { transform: scale(0.9); opacity: 0.4; }
-  100% { transform: scale(1.3); opacity: 0.8; }
-}
+/* ── Royal Handle (Center) ─────────────────────────
+   (Styled under center monogram seal section)
+   ────────────────────────────────────────────────── */
 
 .brass-handle {
   width: 100%;
