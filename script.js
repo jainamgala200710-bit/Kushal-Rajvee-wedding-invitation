@@ -1206,14 +1206,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ═══════════════════════════════════════════════════════════════
-     INTERACTIVE 3D CARD TILT SYSTEM
-     Mouse-tracking on desktop, gyroscope on mobile.
-     Gold shimmer highlight + dynamic shadow depth.
+     INTERACTIVE 3D CARD TILT SYSTEM (Performance-Optimised)
+     — Transform-only updates (GPU-composited, no repaints)
+     — requestAnimationFrame throttle (1 write per frame)
+     — No dynamic box-shadow (avoids expensive full repaints)
      ═══════════════════════════════════════════════════════════════ */
 
   const tiltCards = document.querySelectorAll(".floral-border, .venue-card-royal");
-  const MAX_TILT = 6;         // max degrees of rotation
-  const SHADOW_SHIFT = 12;    // px shift for dynamic shadow
+  const MAX_TILT = 5;        // max degrees of rotation
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   // Inject shine overlay into each floral-border card
@@ -1225,92 +1225,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Apply tilt transform with dynamic shadow
-  function applyTilt(card, xPercent, yPercent) {
-    const rotateY = (xPercent - 0.5) * MAX_TILT * 2;
-    const rotateX = (0.5 - yPercent) * MAX_TILT * 2;
-    const shadowX = (xPercent - 0.5) * SHADOW_SHIFT * 2;
-    const shadowY = (yPercent - 0.5) * SHADOW_SHIFT * 2;
-
-    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
-    card.style.boxShadow = `
-      inset 0 0 20px rgba(184, 150, 46, 0.12),
-      ${-shadowX}px ${-shadowY + 20}px 50px rgba(0,0,0,0.10),
-      ${-shadowX * 0.5}px ${-shadowY * 0.5 + 30}px 70px rgba(0,0,0,0.05),
-      0 0 0 2px #FFFDF5,
-      0 0 0 4px var(--gold),
-      0 0 0 6px #FFFDF5,
-      0 0 0 7.5px rgba(212,175,55,0.35)
-    `;
-
-    // Move shine highlight
-    const shine = card.querySelector(".card-3d-shine");
-    if (shine) {
-      shine.style.opacity = "1";
-      shine.style.transform = `translateX(${(xPercent - 0.3) * 160}%)`;
-    }
-  }
-
-  function resetTilt(card) {
-    card.style.transform = "";
-    card.style.boxShadow = "";
-    const shine = card.querySelector(".card-3d-shine");
-    if (shine) {
-      shine.style.opacity = "0";
-      shine.style.transform = "translateX(-80%)";
-    }
-  }
-
-  // Desktop: Mouse-tracking tilt
+  // Only enable tilt on desktop — skip mobile entirely for performance
   if (!isMobile) {
     tiltCards.forEach(card => {
+      let rafId = null;
+      let latestX = 0.5, latestY = 0.5;
+
       card.addEventListener("mousemove", (e) => {
         const rect = card.getBoundingClientRect();
-        const xPercent = (e.clientX - rect.left) / rect.width;
-        const yPercent = (e.clientY - rect.top) / rect.height;
-        applyTilt(card, xPercent, yPercent);
-      });
+        latestX = (e.clientX - rect.left) / rect.width;
+        latestY = (e.clientY - rect.top) / rect.height;
+
+        // Throttle to one DOM write per animation frame
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            const rotateY = (latestX - 0.5) * MAX_TILT * 2;
+            const rotateX = (0.5 - latestY) * MAX_TILT * 2;
+
+            // Transform-only — GPU composited, zero repaints
+            card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.012, 1.012, 1.012)`;
+
+            // Move shine highlight (transform-only, no repaint)
+            const shine = card.querySelector(".card-3d-shine");
+            if (shine) {
+              shine.style.opacity = "1";
+              shine.style.transform = `translateX(${(latestX - 0.3) * 160}%)`;
+            }
+
+            rafId = null;
+          });
+        }
+      }, { passive: true });
 
       card.addEventListener("mouseleave", () => {
-        resetTilt(card);
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        card.style.transform = "";
+        const shine = card.querySelector(".card-3d-shine");
+        if (shine) {
+          shine.style.opacity = "0";
+          shine.style.transform = "translateX(-80%)";
+        }
       });
     });
-  }
-
-  // Mobile: Gyroscope-driven tilt (DeviceOrientationEvent)
-  if (isMobile && window.DeviceOrientationEvent) {
-    let gyroEnabled = false;
-    const enableGyro = () => {
-      if (gyroEnabled) return;
-      gyroEnabled = true;
-
-      window.addEventListener("deviceorientation", (e) => {
-        if (e.gamma === null || e.beta === null) return;
-        // gamma: left-right tilt (-90 to 90), beta: front-back tilt (-180 to 180)
-        const xPercent = Math.max(0, Math.min(1, (e.gamma + 30) / 60));
-        const yPercent = Math.max(0, Math.min(1, (e.beta - 30) / 60));
-
-        // Only tilt cards currently in viewport
-        tiltCards.forEach(card => {
-          const rect = card.getBoundingClientRect();
-          const inView = rect.top < window.innerHeight && rect.bottom > 0;
-          if (inView) {
-            applyTilt(card, xPercent, yPercent);
-          }
-        });
-      }, { passive: true });
-    };
-
-    // iOS 13+ requires permission request
-    if (typeof DeviceOrientationEvent.requestPermission === "function") {
-      document.addEventListener("touchstart", () => {
-        DeviceOrientationEvent.requestPermission()
-          .then(state => { if (state === "granted") enableGyro(); })
-          .catch(() => {});
-      }, { once: true });
-    } else {
-      enableGyro();
-    }
   }
 
   // Initialize scratch card once the invitation scene is visible
