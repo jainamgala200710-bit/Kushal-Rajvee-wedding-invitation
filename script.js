@@ -1193,17 +1193,6 @@ document.addEventListener("DOMContentLoaded", () => {
   populateContent();
   initCountdown();
 
-  // Dynamic injection of royal card corner ornaments
-  document.querySelectorAll(".floral-border, .venue-card-royal").forEach(card => {
-    if (!card.querySelector(".card-corner")) {
-      const positions = ['tl', 'tr', 'bl', 'br'];
-      positions.forEach(pos => {
-        const corner = document.createElement("div");
-        corner.className = `card-corner ${pos}`;
-        card.appendChild(corner);
-      });
-    }
-  });
 
   /* ═══════════════════════════════════════════════════════════════
      INTERACTIVE 3D CARD TILT SYSTEM (Performance-Optimised)
