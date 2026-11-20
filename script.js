@@ -8,8 +8,8 @@
 const CONFIG = {
 
   // ── Couple Details ──────────────────────────────────
-  brideName: "Rajvee",
-  groomName: "Kushal",
+  brideName: "Dhwani",
+  groomName: "Amey",
   brideParents: "Daughter of Rashmi & Tejas Gala",
   groomParents: "Son of Falguni & Rajinikanath Gindra",
   welcomeInviteText: "With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of",
@@ -23,7 +23,7 @@ const CONFIG = {
   weddingDateISO: "2027-02-10T19:00:00",  // Used for countdown timer
 
   // ── Venue ───────────────────────────────────────────
-  venueName: "Rajvee & Kushal Wedding Venue",
+  venueName: "Dhwani & Amey Wedding Venue",
   venueAddress: "JK Mehta Rd,\nSantacruz (West),\nMumbai,\nMaharashtra 400054",
   venuePhoto: "images/venue.webp",     // Replace with your venue photo
   venueMapLink: "https://www.google.com/maps/dir/?api=1&destination=JK+Mehta+Rd,+Santacruz+(West),+Mumbai,+Maharashtra+400054",
@@ -103,19 +103,23 @@ const petalsCanvas   = document.getElementById("petals-canvas");
 const sparklesCanvas = document.getElementById("sparkles-canvas");
 const dustCanvas     = document.getElementById("dust-canvas");
 const musicBtn       = document.getElementById("music-btn");
-const bgMusic        = document.getElementById("bg-music");
-let musicInitialized = false;
-if (bgMusic) {
-  bgMusic.src = "music.mp3?v=" + Date.now();
-  bgMusic.addEventListener("loadedmetadata", () => {
-    if (!musicInitialized) {
-      bgMusic.currentTime = 15;
-      musicInitialized = true;
-    }
-  });
-}
 const musicIcon      = document.getElementById("music-icon");
+const bgMusic        = document.getElementById("bg-music");
 const lightBurst     = document.getElementById("light-burst");
+let musicInitialized = false;
+
+function prepareMusic() {
+  if (!bgMusic) return;
+  if (!musicInitialized) {
+    if (!bgMusic.src || !bgMusic.src.includes("music.mp3")) {
+      bgMusic.src = "music.mp3";
+    }
+    bgMusic.addEventListener("loadedmetadata", () => {
+      try { bgMusic.currentTime = 15; } catch (e) {}
+    }, { once: true });
+    musicInitialized = true;
+  }
+}
 
 // Palace elements
 const palaceFrame    = document.getElementById("palace-frame");
@@ -206,15 +210,12 @@ let musicPlaying = false;
 
 function toggleMusic() {
   if (!bgMusic) return;
+  prepareMusic();
   if (musicPlaying) {
     bgMusic.pause();
     if (musicBtn) musicBtn.classList.remove("playing");
     if (musicIcon) musicIcon.textContent = "♫";
   } else {
-    if (!musicInitialized) {
-      bgMusic.currentTime = 15;
-      musicInitialized = true;
-    }
     bgMusic.play().catch(() => {});
     if (musicBtn) musicBtn.classList.add("playing");
     if (musicIcon) musicIcon.textContent = "♫";
@@ -227,14 +228,17 @@ if (musicBtn) {
     e.stopPropagation();
     toggleMusic();
   });
+  musicBtn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleMusic();
+    }
+  });
 }
 
 function startMusic() {
   if (bgMusic && !musicPlaying && CONFIG.musicAutoplay) {
-    if (!musicInitialized) {
-      bgMusic.currentTime = 15;
-      musicInitialized = true;
-    }
+    prepareMusic();
     bgMusic.play().then(() => {
       musicPlaying = true;
       if (musicBtn) musicBtn.classList.add("playing");
@@ -247,19 +251,27 @@ function startMusic() {
    FLOWER PETAL PARTICLE SYSTEM (Canvas)
    ═══════════════════════════════════════════════════════════════ */
 
-const petalCtx = petalsCanvas.getContext("2d");
+const petalCtx = petalsCanvas.getContext("2d", { alpha: true });
 let petals = [];
 let petalsActive = false;
+let petalsRafId = null;
 
+let resizeRaf = null;
 function resizeCanvases() {
-  petalsCanvas.width = sparklesCanvas.width = window.innerWidth;
-  petalsCanvas.height = sparklesCanvas.height = window.innerHeight;
-  if (dustCanvas) {
-    dustCanvas.width = window.innerWidth;
-    dustCanvas.height = window.innerHeight;
-  }
+  if (resizeRaf) cancelAnimationFrame(resizeRaf);
+  resizeRaf = requestAnimationFrame(() => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    petalsCanvas.width = sparklesCanvas.width = w;
+    petalsCanvas.height = sparklesCanvas.height = h;
+    if (dustCanvas) {
+      dustCanvas.width = w;
+      dustCanvas.height = h;
+    }
+    resizeRaf = null;
+  });
 }
-window.addEventListener("resize", resizeCanvases);
+window.addEventListener("resize", resizeCanvases, { passive: true });
 resizeCanvases();
 
 const PETAL_COLORS = [
@@ -275,30 +287,26 @@ const PETAL_COLORS = [
 function createPetal(cx, cy, isBurst) {
   const color = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
   const size = isBurst 
-    ? (4 + Math.random() * 22) 
-    : (5 + Math.random() * 18);
+    ? (4 + Math.random() * 20) 
+    : (5 + Math.random() * 16);
 
-  let blur = 0;
   let opacity = 0.4 + Math.random() * 0.45;
-  let speedY = 0.5 + Math.random() * 1.3;
-  let speedX = 0.2 + Math.random() * 0.5; // diagonal wind drift bias
+  let speedY = 0.5 + Math.random() * 1.2;
+  let speedX = 0.2 + Math.random() * 0.5;
 
-  if (size > 16) {
-    blur = 2.0 + Math.random() * 2; // foreground depth-of-field blur
-    speedY *= 1.4; // falls faster
+  if (size > 15) {
+    speedY *= 1.3;
     opacity = 0.65 + Math.random() * 0.25;
   } else if (size < 8) {
-    blur = 1.0 + Math.random() * 1; // background depth-of-field blur
-    speedY *= 0.65; // falls slower
+    speedY *= 0.7;
     opacity = 0.3 + Math.random() * 0.3;
   }
 
-  // If it's a burst particle, shoot it outwards
   if (isBurst && cx !== undefined && cy !== undefined) {
     const angle = Math.random() * Math.PI * 2;
-    const force = 3 + Math.random() * 8;
+    const force = 3 + Math.random() * 7;
     speedX = Math.cos(angle) * force;
-    speedY = Math.sin(angle) * force - 3; // bias upwards
+    speedY = Math.sin(angle) * force - 3;
   }
 
   return {
@@ -313,9 +321,8 @@ function createPetal(cx, cy, isBurst) {
     wobbleSpeed: 0.015 + Math.random() * 0.015,
     wobbleAmp: 0.8 + Math.random() * 1.2,
     opacity: opacity,
-    blur: blur,
     isBurst: !!isBurst,
-    r: color[0], g: color[1], b: color[2],
+    colorStr: `rgb(${color[0]}, ${color[1]}, ${color[2]})`,
   };
 }
 
@@ -325,30 +332,21 @@ function drawPetal(ctx, p) {
   ctx.rotate(p.rotation);
   ctx.globalAlpha = p.opacity;
 
-  // Apply depth-of-field blur (disabled on mobile for performance)
-  if (p.blur > 0 && window.innerWidth >= 768) {
-    ctx.filter = `blur(${p.blur}px)`;
-  } else {
-    ctx.filter = "none";
-  }
-
   ctx.beginPath();
-  // Petal shape: two bezier curves forming an elliptical leaf
   ctx.moveTo(0, 0);
   ctx.bezierCurveTo(p.size * 0.4, -p.size * 0.3, p.size, p.size * 0.2, 0, p.size);
   ctx.bezierCurveTo(-p.size, p.size * 0.2, -p.size * 0.4, -p.size * 0.3, 0, 0);
-  ctx.fillStyle = `rgb(${p.r}, ${p.g}, ${p.b})`;
+  ctx.fillStyle = p.colorStr;
   ctx.fill();
   ctx.restore();
-  ctx.filter = "none"; // reset filter just in case
 }
 
 function updatePetals() {
-  if (!petalsActive) return;
+  if (!petalsActive || document.hidden) return;
   petalCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
 
-  // Spawn new petals for continuous rain (cap rain particles)
-  if (petals.length < 80 && Math.random() < 0.12) {
+  const maxPetals = window.innerWidth < 768 ? 16 : 30;
+  if (petals.length < maxPetals && Math.random() < 0.10) {
     petals.push(createPetal());
   }
 
@@ -356,14 +354,12 @@ function updatePetals() {
     const p = petals[i];
     
     if (p.isBurst) {
-      // Apply gravity and drag to burst particles
-      p.speedY += 0.08; // gravity
-      p.speedX *= 0.98; // horizontal drag
-      p.speedY *= 0.98; // vertical drag
+      p.speedY += 0.08;
+      p.speedX *= 0.98;
+      p.speedY *= 0.98;
       p.x += p.speedX;
       p.y += p.speedY;
     } else {
-      // Regular falling drift
       p.y += p.speedY;
       p.wobble += p.wobbleSpeed;
       p.x += Math.sin(p.wobble) * p.wobbleAmp + p.speedX;
@@ -372,18 +368,18 @@ function updatePetals() {
 
     drawPetal(petalCtx, p);
 
-    // Remove if out of screen bounds
     if (p.y > petalsCanvas.height + 40 || p.x < -40 || p.x > petalsCanvas.width + 40) {
       petals.splice(i, 1);
     }
   }
 
-  requestAnimationFrame(updatePetals);
+  petalsRafId = requestAnimationFrame(updatePetals);
 }
 
 function burstPetals(cx, cy, count) {
   petalsActive = true;
-  for (let i = 0; i < count; i++) {
+  const burstCount = window.innerWidth < 768 ? Math.min(count, 30) : count;
+  for (let i = 0; i < burstCount; i++) {
     petals.push(createPetal(cx, cy, true));
   }
 }
@@ -393,22 +389,23 @@ function burstPetals(cx, cy, count) {
    GOLDEN SPARKLE PARTICLE SYSTEM (Canvas)
    ═══════════════════════════════════════════════════════════════ */
 
-const sparkleCtx = sparklesCanvas.getContext("2d");
+const sparkleCtx = sparklesCanvas.getContext("2d", { alpha: true });
 let sparkles = [];
 let sparklesActive = false;
+let sparklesRafId = null;
 
 function createSparkle(x, y, burst) {
-  const isGold = Math.random() > 0.15; // 85% gold particles, 15% warm silver dust
-  const speedX = burst ? (Math.random() - 0.5) * 4 : (Math.random() - 0.5) * 0.5; // gentle horizontal sway
-  const speedY = burst ? (Math.random() - 0.5) * 4 : -0.15 - Math.random() * 0.45; // slow float upwards
+  const isGold = Math.random() > 0.15;
+  const speedX = burst ? (Math.random() - 0.5) * 4 : (Math.random() - 0.5) * 0.5;
+  const speedY = burst ? (Math.random() - 0.5) * 4 : -0.15 - Math.random() * 0.45;
   return {
     x: x !== undefined ? x : Math.random() * sparklesCanvas.width,
     y: y !== undefined ? y : Math.random() * sparklesCanvas.height,
-    size: 1.2 + Math.random() * 2.8,
+    size: 1.2 + Math.random() * 2.5,
     speedX: speedX,
     speedY: speedY,
     life: 1.0,
-    decay: burst ? 0.015 + Math.random() * 0.01 : 0.002 + Math.random() * 0.004, // longer life for dust particles
+    decay: burst ? 0.015 + Math.random() * 0.01 : 0.002 + Math.random() * 0.004,
     twinkleSpeed: 0.03 + Math.random() * 0.05,
     twinklePhase: Math.random() * Math.PI * 2,
     gold: isGold,
@@ -416,11 +413,11 @@ function createSparkle(x, y, burst) {
 }
 
 function updateSparkles() {
-  if (!sparklesActive) return;
+  if (!sparklesActive || document.hidden) return;
   sparkleCtx.clearRect(0, 0, sparklesCanvas.width, sparklesCanvas.height);
 
-  // Ambient sparkles
-  if (sparkles.length < 30 && Math.random() < 0.05) {
+  const maxSparkles = window.innerWidth < 768 ? 16 : 30;
+  if (sparkles.length < maxSparkles && Math.random() < 0.05) {
     sparkles.push(createSparkle());
   }
 
@@ -442,10 +439,7 @@ function updateSparkles() {
     sparkleCtx.save();
     sparkleCtx.globalAlpha = alpha;
     sparkleCtx.fillStyle = s.gold ? "#FFD700" : "#FFF8DC";
-    sparkleCtx.shadowColor = "#FFD700";
-    sparkleCtx.shadowBlur = 6;
     sparkleCtx.beginPath();
-    // 4-point star shape
     const sz = s.size;
     sparkleCtx.moveTo(s.x, s.y - sz);
     sparkleCtx.lineTo(s.x + sz * 0.3, s.y - sz * 0.3);
@@ -460,12 +454,13 @@ function updateSparkles() {
     sparkleCtx.restore();
   }
 
-  requestAnimationFrame(updateSparkles);
+  sparklesRafId = requestAnimationFrame(updateSparkles);
 }
 
 // Burst sparkles from a point (used when seal breaks)
 function burstSparkles(cx, cy, count) {
-  for (let i = 0; i < count; i++) {
+  const burstCount = window.innerWidth < 768 ? Math.min(count, 25) : count;
+  for (let i = 0; i < burstCount; i++) {
     sparkles.push(createSparkle(cx, cy, true));
   }
 }
@@ -688,10 +683,16 @@ function openEnvelope() {
   });
 }
 
-// Attach click/tap listener to envelope
+// Attach click/tap/keyboard listeners to envelope
 if (envelopeWrapper) {
   envelopeWrapper.addEventListener("click", openEnvelope);
   envelopeWrapper.addEventListener("touchend", openEnvelope, { passive: true });
+  envelopeWrapper.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openEnvelope();
+    }
+  });
 }
 
 
@@ -760,17 +761,19 @@ sparklesActive = true;
 updateSparkles();
 
 // Periodically add ambient sparkles (floating dust particles) around palace entrance
+const isMobileDevice = window.innerWidth < 768;
+const ambientIntervalTime = isMobileDevice ? 250 : 150;
 const ambientInterval = setInterval(() => {
   if (isOpened) { clearInterval(ambientInterval); return; }
-  const rect = envelopeWrapper.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2 + (Math.random() - 0.5) * rect.width * 1.5;
-  const cy = rect.top + rect.height / 2 + (Math.random() - 0.5) * rect.height * 1.5;
-  // Spawn multiple dust particles for dense ambient atmosphere
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const cx = w / 2 + (Math.random() - 0.5) * w * 0.9;
+  const cy = h / 2 + (Math.random() - 0.5) * h * 0.9;
   sparkles.push(createSparkle(cx, cy, false));
-  if (Math.random() > 0.4) {
+  if (!isMobileDevice && Math.random() > 0.5) {
     sparkles.push(createSparkle(cx, cy, false));
   }
-}, 150);
+}, ambientIntervalTime);
 
 /* ═══════════════════════════════════════════════════════════════
    FLOATING VOLUMETRIC GOLD DUST — Soft warm particles
@@ -934,6 +937,8 @@ function startScratch(e) {
   scratchCtx.moveTo(pos.x, pos.y);
 }
 
+let lastScratchCheck = 0;
+
 function doScratch(e) {
   if (!isScratching || scratchRevealed) return;
   e.preventDefault();
@@ -948,27 +953,40 @@ function doScratch(e) {
   scratchCtx.beginPath();
   scratchCtx.moveTo(pos.x, pos.y);
 
-  // Check if enough has been scratched (>50%)
-  checkScratchProgress();
+  // Throttle progress check (at most once every 120ms during active stroke)
+  const now = performance.now();
+  if (now - lastScratchCheck > 120) {
+    lastScratchCheck = now;
+    checkScratchProgress();
+  }
 }
 
 function stopScratch() {
   isScratching = false;
+  checkScratchProgress();
 }
 
 function checkScratchProgress() {
-  const imageData = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
-  const pixels = imageData.data;
-  let transparent = 0;
-  // Check alpha channel (every 4th byte) — sample every 4th pixel for performance
-  for (let i = 3; i < pixels.length; i += 16) {
-    if (pixels[i] === 0) transparent++;
-  }
-  const total = pixels.length / 16;
-  const pct = transparent / total;
+  if (scratchRevealed || !scratchCtx || !scratchCanvas) return;
+  try {
+    const w = scratchCanvas.width;
+    const h = scratchCanvas.height;
+    if (w <= 0 || h <= 0) return;
+    const imageData = scratchCtx.getImageData(0, 0, w, h);
+    const pixels = imageData.data;
+    let transparent = 0;
+    let total = 0;
+    // Step by 32 bytes (8 pixels) for ultra-fast <0.1ms sparse sampling
+    for (let i = 3; i < pixels.length; i += 32) {
+      total++;
+      if (pixels[i] === 0) transparent++;
+    }
 
-  if (pct > 0.5) {
-    revealScratchCard();
+    if (total > 0 && (transparent / total) > 0.45) {
+      revealScratchCard();
+    }
+  } catch (err) {
+    // Non-blocking catch
   }
 }
 
@@ -1019,15 +1037,14 @@ function flowerPopperBurst(cx, cy) {
 
     if (isEmoji) {
       el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-      el.style.fontSize = (14 + Math.random() * 26) + "px";
+      el.style.fontSize = (14 + Math.random() * 20) + "px";
     } else {
       const color = petalColors[Math.floor(Math.random() * petalColors.length)];
-      const size = 8 + Math.random() * 16;
+      const size = 8 + Math.random() * 14;
       el.style.width = size + "px";
       el.style.height = size * (0.6 + Math.random() * 0.8) + "px";
       el.style.background = color;
       el.style.borderRadius = Math.random() > 0.5 ? "50%" : "50% 0 50% 0";
-      el.style.boxShadow = `0 0 8px ${color}90`;
     }
 
     el.style.position = "fixed";
@@ -1036,69 +1053,36 @@ function flowerPopperBurst(cx, cy) {
     el.style.pointerEvents = "none";
     el.style.zIndex = "9999";
     el.style.opacity = "1";
+    el.style.willChange = "transform, opacity";
     container.appendChild(el);
     return el;
   }
 
-  // 1. Initial Massive Popper Burst (200 particles)
-  const INITIAL_COUNT = 200;
+  // 1. Initial Festive Popper Burst (efficient particle budget)
+  const isMobile = window.innerWidth < 768;
+  const INITIAL_COUNT = isMobile ? 45 : 80;
   for (let i = 0; i < INITIAL_COUNT; i++) {
     const el = createPetal(cx, cy);
     const angle = (Math.PI * 2 * i) / INITIAL_COUNT + (Math.random() - 0.5) * 0.5;
-    const velocity = 150 + Math.random() * 380;
+    const velocity = 120 + Math.random() * 320;
     const dx = Math.cos(angle) * velocity;
-    const dy = Math.sin(angle) * velocity - 100 - Math.random() * 150; // bias upward
-    const rotation = (Math.random() - 0.5) * 1080;
+    const dy = Math.sin(angle) * velocity - 90 - Math.random() * 120; // bias upward
+    const rotation = (Math.random() - 0.5) * 720;
 
     gsap.to(el, {
       x: dx,
-      y: dy + 350 + Math.random() * 200,
+      y: dy + 300 + Math.random() * 150,
       rotation: rotation,
       opacity: 0,
-      scale: 0.2 + Math.random() * 0.6,
-      duration: 2.0 + Math.random() * 2.0,
+      scale: 0.2 + Math.random() * 0.5,
+      duration: 1.8 + Math.random() * 1.5,
       ease: "power2.out",
       onComplete: () => el.remove(),
     });
   }
 
-  // 2. Continuous celebratory flower rain for 10 seconds
-  const intervalTime = 80; // Spawn wave every 80ms
-  const spawnAmount = 8;   // Number of petals per wave
-  
-  const rainInterval = setInterval(() => {
-    for (let i = 0; i < spawnAmount; i++) {
-      const spawnX = Math.random() * window.innerWidth;
-      const spawnY = -30;
-      const el = createPetal(spawnX, spawnY);
-      
-      const fallDuration = 3.0 + Math.random() * 4.0;
-      const driftX = (Math.random() - 0.5) * 300;
-      const rotation = (Math.random() - 0.5) * 720;
-      
-      gsap.to(el, {
-        y: window.innerHeight + 50,
-        x: `+=${driftX}`,
-        rotation: rotation,
-        opacity: 0.1,
-        duration: fallDuration,
-        ease: "none",
-        onComplete: () => el.remove()
-      });
-      
-      gsap.to(el, {
-        opacity: 0,
-        delay: fallDuration - 0.8,
-        duration: 0.8,
-        ease: "power1.in"
-      });
-    }
-  }, intervalTime);
-
-  // Stop spawning after 4 seconds
-  setTimeout(() => {
-    clearInterval(rainInterval);
-  }, 4000);
+  // 2. Secondary gentle celebration via high-performance canvas petals
+  burstPetals(window.innerWidth / 2, -20, isMobile ? 15 : 30);
 }
 
 // ── Countdown Timer Logic ─────────────────────────────
@@ -1108,22 +1092,24 @@ function initCountdown() {
     targetDateEl.textContent = `✦ ${CONFIG.weddingDate} at ${CONFIG.weddingTime} ✦`;
   }
 
+  const target = new Date(CONFIG.weddingDateISO);
+  const mEl = document.getElementById("cd-months");
+  const dEl = document.getElementById("cd-days");
+  const hEl = document.getElementById("cd-hours");
+  const minEl = document.getElementById("cd-minutes");
+  const sEl = document.getElementById("cd-seconds");
+
+  let lastM = "", lastD = "", lastH = "", lastMin = "", lastS = "";
+
   function updateCountdown() {
-    const target = new Date(CONFIG.weddingDateISO);
     const now = new Date();
-    
-    const mEl = document.getElementById("cd-months");
-    const dEl = document.getElementById("cd-days");
-    const hEl = document.getElementById("cd-hours");
-    const minEl = document.getElementById("cd-minutes");
-    const sEl = document.getElementById("cd-seconds");
 
     if (now >= target) {
-      if (mEl) mEl.textContent = "00";
-      if (dEl) dEl.textContent = "00";
-      if (hEl) hEl.textContent = "00";
-      if (minEl) minEl.textContent = "00";
-      if (sEl) sEl.textContent = "00";
+      if (mEl && mEl.textContent !== "00") mEl.textContent = "00";
+      if (dEl && dEl.textContent !== "00") dEl.textContent = "00";
+      if (hEl && hEl.textContent !== "00") hEl.textContent = "00";
+      if (minEl && minEl.textContent !== "00") minEl.textContent = "00";
+      if (sEl && sEl.textContent !== "00") sEl.textContent = "00";
       return;
     }
     
@@ -1177,11 +1163,17 @@ function initCountdown() {
     
     let seconds = Math.floor(diffMs / msInSecond);
     
-    if (mEl) mEl.textContent = String(months).padStart(2, '0');
-    if (dEl) dEl.textContent = String(days).padStart(2, '0');
-    if (hEl) hEl.textContent = String(hours).padStart(2, '0');
-    if (minEl) minEl.textContent = String(minutes).padStart(2, '0');
-    if (sEl) sEl.textContent = String(seconds).padStart(2, '0');
+    const strM = String(months).padStart(2, '0');
+    const strD = String(days).padStart(2, '0');
+    const strH = String(hours).padStart(2, '0');
+    const strMin = String(minutes).padStart(2, '0');
+    const strS = String(seconds).padStart(2, '0');
+
+    if (mEl && lastM !== strM) { mEl.textContent = strM; lastM = strM; }
+    if (dEl && lastD !== strD) { dEl.textContent = strD; lastD = strD; }
+    if (hEl && lastH !== strH) { hEl.textContent = strH; lastH = strH; }
+    if (minEl && lastMin !== strMin) { minEl.textContent = strMin; lastMin = strMin; }
+    if (sEl && lastS !== strS) { sEl.textContent = strS; lastS = strS; }
   }
   
   updateCountdown();
@@ -1219,11 +1211,16 @@ document.addEventListener("DOMContentLoaded", () => {
     tiltCards.forEach(card => {
       let rafId = null;
       let latestX = 0.5, latestY = 0.5;
+      let cardRect = null;
+
+      card.addEventListener("mouseenter", () => {
+        cardRect = card.getBoundingClientRect();
+      }, { passive: true });
 
       card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        latestX = (e.clientX - rect.left) / rect.width;
-        latestY = (e.clientY - rect.top) / rect.height;
+        if (!cardRect) cardRect = card.getBoundingClientRect();
+        latestX = (e.clientX - cardRect.left) / cardRect.width;
+        latestY = (e.clientY - cardRect.top) / cardRect.height;
 
         // Throttle to one DOM write per animation frame
         if (!rafId) {
@@ -1247,6 +1244,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, { passive: true });
 
       card.addEventListener("mouseleave", () => {
+        cardRect = null;
         if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         card.style.transform = "";
         const shine = card.querySelector(".card-3d-shine");

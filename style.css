@@ -42,6 +42,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -50,12 +51,28 @@ body {
   color: var(--maroon-deep);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+/* Accessible focus visible rings */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Touch & Interaction defaults */
+button, a, [role="button"], .envelope-wrapper, .envelope-seal, .scratch-card {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 
@@ -64,7 +81,8 @@ img {
    ═══════════════════════════════════════════════════════════════ */
 
 #petals-canvas,
-#sparkles-canvas {
+#sparkles-canvas,
+#dust-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -72,8 +90,12 @@ img {
   height: 100%;
   pointer-events: none;
   z-index: 1000;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 #sparkles-canvas { z-index: 999; }
+#dust-canvas { z-index: 998; }
 
 
 /* ═══════════════════════════════════════════════════════════════
@@ -89,6 +111,9 @@ img {
   justify-content: center;
   background: radial-gradient(circle at top, #fffefc 0%, #fffaf2 35%, #f9f1df 100%);
   overflow: hidden;
+  will-change: opacity, background-color;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .invitation-scene {
@@ -103,6 +128,7 @@ img {
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: multiply;
+  will-change: opacity;
   animation: sunsetPulse 8s ease-in-out infinite;
 }
 
@@ -115,7 +141,7 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate3d(-50%, -50%, 0) scale(0);
   width: min(800px, 180vw);
   height: min(800px, 180vw);
   background: radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, rgba(212, 175, 55, 0.2) 40%, transparent 70%);
@@ -124,6 +150,7 @@ img {
   pointer-events: none;
   z-index: 10;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
 /* Primary volumetric rays — diagonal from top-left */
@@ -142,6 +169,7 @@ img {
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: multiply;
+  will-change: transform, opacity;
   animation: raysSway 10s ease-in-out infinite alternate;
 }
 
@@ -190,22 +218,34 @@ img {
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   
-  /* Floating & Glow styles as requested by user */
+  /* Floating & Glow styles — hardware-accelerated */
   box-shadow:
     0 15px 40px rgba(0,0,0,.08),
     0 0 60px rgba(212,175,55,.20);
   backdrop-filter: blur(3px);
-  animation: floatingGlow 8s ease-in-out infinite;
+  -webkit-backdrop-filter: blur(3px);
+  will-change: transform, opacity;
 }
 
-@keyframes floatingGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(212,175,55,.15));
-  }
-  50% {
-    filter: drop-shadow(0 0 28px rgba(212,175,55,.35));
-  }
+.palace-frame::before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border-radius: 24px;
+  background: radial-gradient(circle at center, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity, transform;
+  animation: floatingGlowGPU 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatingGlowGPU {
+  0%   { opacity: 0.35; transform: scale(0.98); }
+  100% { opacity: 0.85; transform: scale(1.02); }
 }
 
 /* Ornamental arch crown label */
@@ -222,6 +262,7 @@ img {
   text-shadow: 0 1px 3px rgba(184, 150, 46, 0.3);
   z-index: 6;
   pointer-events: none;
+  will-change: transform, opacity;
   animation: tapPulse 3s ease-in-out infinite;
   white-space: nowrap;
 }
@@ -235,6 +276,9 @@ img {
   display: flex;
   z-index: 4;
   justify-content: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 /* Hide the old simple double circular arch frame */
@@ -245,11 +289,11 @@ img {
 /* Scalloped Arch SVG frame styling */
 .palace-arch-svg {
   position: absolute;
-  inset: -4px; /* Slightly oversized to completely cover doors under the arch */
+  inset: -4px;
   width: calc(100% + 8px);
   height: calc(100% + 8px);
   pointer-events: none;
-  z-index: 6; /* Renders on top of doors (z-index 2), below handle (z-index 10) */
+  z-index: 6;
 }
 
 /* Golden light leaking through door gap */
@@ -274,221 +318,16 @@ img {
   opacity: 0.7;
   z-index: 3;
   pointer-events: none;
+  will-change: opacity;
   animation: glowPulse 3s ease-in-out infinite alternate;
 }
 
 @keyframes glowPulse {
-  0%   { opacity: 0.4; filter: blur(1.5px); }
-  100% { opacity: 0.75; filter: blur(0.5px); }
+  0%   { opacity: 0.35; }
+  100% { opacity: 0.8; }
 }
 
-/* ── Fortress Wall & Tower Outline ─────────────────── */
 
-.fort-outline {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4; /* Below elephant figures (z-index: 5), above sunset-glow */
-}
-
-/* ── Luxury Outer Wedding Frame ────────────────────── */
-.palace-outer-frame {
-  position: absolute;
-  inset: 16px;
-  border: 1.5px solid var(--gold);
-  pointer-events: none;
-  z-index: 10;
-  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1);
-}
-.palace-outer-frame::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border: 1px dashed rgba(212, 175, 55, 0.35);
-}
-.frame-corner {
-  position: absolute;
-  color: var(--gold-dark);
-  font-size: 1.15rem;
-  background: #FFFDF8;
-  padding: 2px;
-  line-height: 1;
-  font-family: var(--font-display);
-}
-.frame-corner.top-left { top: -9px; left: -9px; }
-.frame-corner.top-right { top: -9px; right: -9px; }
-.frame-corner.bottom-left { bottom: -9px; left: -9px; }
-.frame-corner.bottom-right { bottom: -9px; right: -9px; }
-
-/* ── Luxury Palace Architecture & Pillars ──────────── */
-.palace-architecture {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.palace-pillar {
-  position: absolute;
-  bottom: 0;
-  width: clamp(70px, 9vw, 110px);
-  height: 80%;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 60%, #F5ECE0 100%);
-  border: 2px solid var(--gold);
-  border-bottom: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 
-    inset 0 0 15px rgba(212, 175, 55, 0.08),
-    0 10px 25px rgba(0,0,0,0.06);
-}
-
-.pillar-left {
-  right: calc(50% + clamp(160px, 20vw, 260px) - 5px);
-  border-radius: 4px 0 0 0;
-}
-
-.pillar-right {
-  left: calc(50% + clamp(160px, 20vw, 260px) - 5px);
-  border-radius: 0 4px 0 0;
-}
-
-/* Domed Top (Chhatri Style) */
-.pillar-dome {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 114%;
-  height: clamp(40px, 5.5vw, 65px);
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 40%, #F5ECE0 100%);
-  border: 2px solid var(--gold);
-  border-radius: 50% 50% 0 0;
-  box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.1);
-}
-.pillar-dome::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 5px;
-  height: 16px;
-  background: var(--gold);
-}
-.pillar-dome::after {
-  content: '✦';
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--gold-dark);
-  font-size: 0.65rem;
-}
-
-/* Pillar Balcony Trim */
-.pillar-balcony {
-  position: absolute;
-  top: 0;
-  left: -4px;
-  right: -4px;
-  height: 14px;
-  background: var(--gold-light);
-  border: 1.5px solid var(--gold);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-.pillar-balcony span {
-  width: 6px;
-  height: 6px;
-  background: #FFFDF8;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-}
-
-/* Jharokha Niche */
-.pillar-niche {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 42%;
-  height: 35%;
-  background: radial-gradient(circle at center, #FFFFFF 0%, #FDFBF7 100%);
-  border: 1.5px solid var(--gold);
-  border-radius: 20px 20px 0 0;
-  box-shadow: 
-    inset 0 3px 6px rgba(184, 150, 46, 0.1),
-    0 2px 4px rgba(0,0,0,0.02);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.niche-motif {
-  color: var(--gold-dark);
-  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
-  text-shadow: 0 1px 1px rgba(255,255,255,0.8);
-}
-
-.pillar-shaft {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.pillar-shaft::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border-left: 1px dashed rgba(212, 175, 55, 0.25);
-  border-right: 1px dashed rgba(212, 175, 55, 0.25);
-}
-
-.pillar-base {
-  width: 108%;
-  height: 24px;
-  background: #F5ECE0;
-  border: 2px solid var(--gold);
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-}
-
-/* Royal Marble Steps */
-.palace-steps {
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(clamp(320px, 40vw, 520px) + clamp(120px, 16vw, 200px));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-}
-.step {
-  height: 12px;
-  background: linear-gradient(90deg, #FAF7F2, #FFFFFF, #FAF7F2);
-  border: 1.5px solid var(--gold);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
-}
-.step-1 {
-  width: 82%;
-  border-radius: 4px 4px 0 0;
-  z-index: 3;
-}
-.step-2 {
-  width: 91%;
-  height: 13px;
-  margin-top: -2px;
-  z-index: 2;
-}
-.step-3 {
-  width: 100%;
-  height: 14px;
-  margin-top: -2px;
-  z-index: 1;
-}
 
 /* ── Luxury Image-Based Palace Gate ────────────────── */
 .palace-gate-container {
@@ -600,7 +439,7 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   width: clamp(140px, 18vw, 190px);
   height: clamp(140px, 18vw, 190px);
   z-index: 10;
@@ -608,30 +447,35 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .wedding-monogram-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 6px 16px rgba(184, 150, 46, 0.45)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.25));
-  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 6px 16px rgba(184, 150, 46, 0.45));
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   animation: monogramPulse 3s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-.envelope-seal:hover .wedding-monogram-img {
-  transform: scale(1.08);
-  filter: drop-shadow(0 10px 25px rgba(184, 150, 46, 0.6)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+.envelope-seal:hover .wedding-monogram-img,
+.envelope-seal:focus-visible .wedding-monogram-img {
+  transform: scale3d(1.08, 1.08, 1.08);
+}
+
+.envelope-seal:active .wedding-monogram-img {
+  transform: scale3d(0.96, 0.96, 0.96);
 }
 
 @keyframes monogramPulse {
   0% {
-    transform: scale(0.98);
-    filter: drop-shadow(0 6px 16px rgba(184, 150, 46, 0.4)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.2)) brightness(1);
+    transform: scale3d(0.98, 0.98, 0.98);
   }
   100% {
-    transform: scale(1.03);
-    filter: drop-shadow(0 12px 28px rgba(184, 150, 46, 0.55)) drop-shadow(0 0 18px rgba(212, 175, 55, 0.35)) brightness(1.08);
+    transform: scale3d(1.03, 1.03, 1.03);
   }
 }
 
@@ -642,11 +486,12 @@ img {
   background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
   animation: handleRingPulse 2.5s ease-in-out infinite alternate;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 @keyframes handleRingPulse {
-  0%   { transform: scale(0.9); opacity: 0.3; }
-  100% { transform: scale(1.25); opacity: 0.75; }
+  0%   { transform: scale3d(0.9, 0.9, 0.9); opacity: 0.3; }
+  100% { transform: scale3d(1.25, 1.25, 1.25); opacity: 0.75; }
 }
 
 /* Embossed floral carvings */
@@ -928,12 +773,13 @@ img {
   pointer-events: none;
   opacity: 0.18;
   filter: drop-shadow(0 3px 10px rgba(184,150,46,0.08)) sepia(0.3) saturate(0.5) brightness(1.1);
+  will-change: opacity;
   animation: featherGlow 5s ease-in-out infinite alternate;
 }
 
 @keyframes featherGlow {
-  0%   { opacity: 0.14; filter: drop-shadow(0 3px 10px rgba(184,150,46,0.06)) sepia(0.3) saturate(0.5) brightness(1.1); }
-  100% { opacity: 0.22; filter: drop-shadow(0 3px 10px rgba(184,150,46,0.12)) sepia(0.3) saturate(0.5) brightness(1.15); }
+  0%   { opacity: 0.14; }
+  100% { opacity: 0.24; }
 }
 
 .left-feathers {
@@ -2022,14 +1868,56 @@ img {
 
 
 
+/* Floating Music Controller Button */
+.music-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFFDF8 0%, #FAF6EE 50%, #F5ECE0 100%);
+  border: 1.5px solid var(--gold);
+  color: var(--gold-dark);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 15px rgba(184, 150, 46, 0.25);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.music-btn:hover {
+  transform: scale3d(1.1, 1.1, 1.1);
+  box-shadow: 0 6px 20px rgba(184, 150, 46, 0.35);
+}
+
+.music-btn:active {
+  transform: scale3d(0.95, 0.95, 0.95);
+}
+
+.music-btn.playing {
+  border-color: var(--gold-shine);
+  background: linear-gradient(135deg, #FFF8E8 0%, #FAF2DE 100%);
+}
+
+.music-btn.playing .music-icon {
+  display: inline-block;
+  animation: rotateDisc 4s linear infinite;
+  will-change: transform;
+}
+
 @keyframes rotateDisc {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
 @keyframes pulseButton {
-  0% { box-shadow: 0 4px 15px rgba(184, 150, 46, 0.25); }
-  100% { box-shadow: 0 4px 25px rgba(184, 150, 46, 0.45); }
+  0%   { transform: scale3d(1, 1, 1); opacity: 0.85; }
+  100% { transform: scale3d(1.04, 1.04, 1.04); opacity: 1; }
 }
 
 
@@ -2075,7 +1963,8 @@ img {
 .corner-floral {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   opacity: 0.35;
-  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+  text-shadow: 0 2px 4px rgba(212, 175, 55, 0.25);
+  will-change: transform;
   animation: floralSway 6s ease-in-out infinite;
 }
 
@@ -2102,9 +1991,8 @@ img {
   top: 50%;
   transform: translateY(-50%);
   opacity: 0.18;
-  filter:
-    drop-shadow(0 4px 8px rgba(212, 175, 55, 0.15))
-    saturate(0.6) brightness(1.1);
+  text-shadow: 0 3px 6px rgba(212, 175, 55, 0.2);
+  will-change: transform;
   animation: peacockBob 5s ease-in-out infinite;
 }
 
@@ -2138,9 +2026,8 @@ img {
   font-size: clamp(2rem, 5vw, 3.5rem);
   bottom: clamp(30px, 6vh, 80px);
   opacity: 0.15;
-  filter:
-    drop-shadow(0 3px 6px rgba(212, 175, 55, 0.2))
-    sepia(0.3) saturate(1.5) hue-rotate(-10deg);
+  text-shadow: 0 3px 6px rgba(212, 175, 55, 0.25);
+  will-change: transform;
   animation: elephantWalk 8s ease-in-out infinite;
 }
 
@@ -2223,17 +2110,17 @@ img {
 .mandap-top {
   top: clamp(10px, 2vh, 30px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   font-size: clamp(2.5rem, 5vw, 4rem);
   opacity: 0.2;
-  filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.25))
-          sepia(0.4) saturate(1.8) hue-rotate(-15deg);
+  text-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+  will-change: opacity;
   animation: mandapGlow 4s ease-in-out infinite;
 }
 
 @keyframes mandapGlow {
-  0%, 100% { opacity: 0.2; filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.25)) sepia(0.4) saturate(1.8) hue-rotate(-15deg); }
-  50% { opacity: 0.3; filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.4)) sepia(0.4) saturate(1.8) hue-rotate(-15deg); }
+  0%, 100% { opacity: 0.18; }
+  50%      { opacity: 0.32; }
 }
 
 
@@ -2246,7 +2133,7 @@ img {
   padding: 1rem 0;
   background:
     linear-gradient(180deg, rgba(255,253,245,0.9) 0%, rgba(255,248,231,0.85) 50%, rgba(255,253,245,0.9) 100%),
-    url('images/card_bg.webp') center / cover no-repeat;
+    url('images/card_template.webp') center / cover no-repeat;
   background-color: #FFFDF5;
   position: relative;
 }
@@ -2263,7 +2150,8 @@ img {
 .garland-flower {
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   animation: garlandBounce 3s ease-in-out infinite;
-  filter: drop-shadow(0 1px 3px rgba(212, 175, 55, 0.2));
+  text-shadow: 0 1px 3px rgba(212, 175, 55, 0.25);
+  will-change: transform;
 }
 
 .garland-leaf {
@@ -2583,6 +2471,40 @@ img {
 
 .floral-border:hover .card-corner.br,
 .venue-card-royal:hover .card-corner.br { transform: scaleX(-1) translate(2px, -2px); }
+
+/* ── Hardware Accelerated Layer Containers ─────────────────── */
+.section-inner,
+.event-card,
+.venue-card-royal,
+.floral-border,
+.scratch-card {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* ── Accessibility: Reduced Motion Support ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .volumetric-rays,
+  .sunset-glow,
+  .corner-floral,
+  .peacock-left,
+  .peacock-right,
+  .elephant-left,
+  .elephant-right,
+  .garland-flower,
+  .palace-frame::before {
+    animation: none !important;
+  }
+}
 
 
 

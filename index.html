@@ -1,27 +1,68 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding Invitation — You're Cordially Invited</title>
-  <meta name="description" content="An elegant wedding invitation — you are cordially invited to celebrate with us." />
+  <title>Dhwani &amp; Amey — Royal Wedding Invitation</title>
+  <meta name="description" content="You are cordially invited to celebrate the royal wedding of Dhwani and Amey on February 10, 2027 in Mumbai." />
   <meta name="theme-color" content="#D4AF37" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dhwani &amp; Amey — Royal Wedding Invitation" />
+  <meta property="og:description" content="You are cordially invited to celebrate the royal wedding of Dhwani and Amey on February 10, 2027 in Mumbai." />
+  <meta property="og:image" content="images/couple.webp" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dhwani &amp; Amey — Royal Wedding Invitation" />
+  <meta name="twitter:description" content="You are cordially invited to celebrate the royal wedding of Dhwani and Amey on February 10, 2027 in Mumbai." />
+  <meta name="twitter:image" content="images/couple.webp" />
+
+  <!-- Schema.org JSON-LD Structured Data for Event -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Wedding of Dhwani & Amey",
+    "startDate": "2027-02-10T19:00:00+05:30",
+    "endDate": "2027-02-10T23:59:00+05:30",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Dhwani & Amey Wedding Venue",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "JK Mehta Rd",
+        "addressLocality": "Santacruz (West), Mumbai",
+        "postalCode": "400054",
+        "addressRegion": "Maharashtra",
+        "addressCountry": "IN"
+      }
+    },
+    "image": ["images/couple.webp"],
+    "description": "With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of Dhwani & Amey."
+  }
+  </script>
 
   <!-- DNS Prefetch for external resources -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 
-  <!-- Preconnect for Google Fonts (critical render path) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Asynchronous Non-blocking Google Fonts with display=swap -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" />
+  </noscript>
 
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-  <!-- Preload critical hero assets -->
-  <link rel="preload" as="image" href="images/gate_bg.webp" type="image/webp" />
+  <!-- Preload critical hero assets with high fetch priority -->
+  <link rel="preload" as="image" href="images/gate_bg.webp" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="images/card_template.webp" type="image/webp" />
 </head>
 <body>
@@ -105,37 +146,41 @@
     </defs>
   </svg>
 
-  <!-- ════════════════════════════════════════════════════ -->
+  <!-- Floating Music Toggle Button -->
+  <button id="music-btn" class="music-btn" aria-label="Toggle background music" type="button" tabindex="0">
+    <span id="music-icon" class="music-icon" aria-hidden="true">â™«</span>
+  </button>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <!-- PERSISTENT LAYERS — Particles & Music              -->
-  <!-- ════════════════════════════════════════════════════ -->
-  <canvas id="petals-canvas"></canvas>
-  <canvas id="sparkles-canvas"></canvas>
-  <canvas id="dust-canvas"></canvas>
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <canvas id="petals-canvas" aria-hidden="true"></canvas>
+  <canvas id="sparkles-canvas" aria-hidden="true"></canvas>
+  <canvas id="dust-canvas" aria-hidden="true"></canvas>
 
-
-  <audio id="bg-music" loop preload="auto">
+  <audio id="bg-music" loop preload="none">
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- ════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <!-- SCENE 1 — THE ROYAL PALACE ENTRANCE                -->
-  <!-- ════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div id="envelope-scene" class="scene envelope-scene palace-scene">
     <!-- Atmospheric layers -->
-    <div class="sunset-glow"></div>
-    <div class="light-burst" id="light-burst"></div>
-    <div class="volumetric-rays"></div>
-    <div class="volumetric-rays rays-secondary"></div>
+    <div class="sunset-glow" aria-hidden="true"></div>
+    <div class="light-burst" id="light-burst" aria-hidden="true"></div>
+    <div class="volumetric-rays" aria-hidden="true"></div>
+    <div class="volumetric-rays rays-secondary" aria-hidden="true"></div>
 
     <!-- Large background peacock feather fans -->
-    <div class="peacock-feathers-bg left-feathers">
+    <div class="peacock-feathers-bg left-feathers" aria-hidden="true">
       <svg class="feather f-1" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-2" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-3" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-4" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-5" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
     </div>
-    <div class="peacock-feathers-bg right-feathers">
+    <div class="peacock-feathers-bg right-feathers" aria-hidden="true">
       <svg class="feather f-1" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-2" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
       <svg class="feather f-3" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
@@ -143,35 +188,35 @@
       <svg class="feather f-5" viewBox="0 0 200 420"><use href="#peacock-feather-def"/></svg>
     </div>
 
-    <div class="envelope-wrapper" id="envelope-wrapper">
+    <div class="envelope-wrapper" id="envelope-wrapper" role="button" tabindex="0" aria-label="Open Royal Wedding Palace Invitation">
       <div class="palace-frame" id="palace-frame">
         
         <!-- Ornate Viewport Frame -->
-        <div class="royal-viewport-frame"></div>
+        <div class="royal-viewport-frame" aria-hidden="true"></div>
 
         <!-- Hanging Bells for a majestic entrance -->
-        <div class="hanging-bells">
-          <div class="bell bell-1">🔔</div>
-          <div class="bell bell-2">🔔</div>
-          <div class="bell bell-3">🔔</div>
-          <div class="bell bell-4">🔔</div>
+        <div class="hanging-bells" aria-hidden="true">
+          <div class="bell bell-1">ðŸ””</div>
+          <div class="bell bell-2">ðŸ””</div>
+          <div class="bell bell-3">ðŸ””</div>
+          <div class="bell bell-4">ðŸ””</div>
         </div>
 
         <!-- Hanging Flower Garlands (Toran) -->
-        <div class="palace-toran">
+        <div class="palace-toran" aria-hidden="true">
           <div class="toran-flowers">
-            <span>🌸</span><span>🌿</span><span>🌼</span><span>🌿</span><span>🌸</span><span>🌿</span><span>🌼</span><span>🌿</span><span>🌸</span><span>🌿</span><span>🌼</span><span>🌿</span><span>🌸</span>
+            <span>ðŸŒ¸</span><span>ðŸŒ¿</span><span>ðŸŒ¼</span><span>ðŸŒ¿</span><span>ðŸŒ¸</span><span>ðŸŒ¿</span><span>ðŸŒ¼</span><span>ðŸŒ¿</span><span>ðŸŒ¸</span><span>ðŸŒ¿</span><span>ðŸŒ¼</span><span>ðŸŒ¿</span><span>ðŸŒ¸</span>
           </div>
         </div>
         
         <!-- Ornamental arch crown above doors -->
-        <div class="arch-crown">✦ श्री ✦</div>
+        <div class="arch-crown" aria-hidden="true">âœ¦ à¤¶à¥à¤°à¥€ âœ¦</div>
 
         <!-- The Luxury Wedding Entrance Container -->
         <div class="palace-gate-container">
           <div class="gate-inner">
             <!-- Gate background with door area transparent -->
-            <img src="images/gate_bg.webp" class="gate-bg-img" alt="Royal Palace" />
+            <img src="images/gate_bg.webp" class="gate-bg-img" alt="Royal Palace Entrance" width="1024" height="683" decoding="async" fetchpriority="high" />
             
             <!-- The Grand Palace Doors (3D Perspective) -->
             <div class="palace-doors" id="palace-doors">
@@ -183,7 +228,7 @@
               </div>
               
               <!-- Glowing brass handle seal in the center (used as tap trigger and GSAP target) -->
-              <div class="envelope-seal" id="envelope-seal">
+              <div class="envelope-seal" id="envelope-seal" role="button" tabindex="0" aria-label="Royal Seal - Click or tap to enter">
                 <div class="handle-glow-ring"></div>
               </div>
             </div>
@@ -191,43 +236,43 @@
         </div>
 
         <!-- Tap hint -->
-        <p class="tap-hint" id="tap-hint">✦ Enter Royal Palace ✦</p>
+        <p class="tap-hint" id="tap-hint">âœ¦ Enter Royal Palace âœ¦</p>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <!-- SCENE 2 — THE INVITATION                           -->
-  <!-- ════════════════════════════════════════════════════ -->
-  <div id="invitation-scene" class="scene invitation-scene">
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <main id="invitation-scene" class="scene invitation-scene">
 
     <!-- Section: Welcome (Ganesha & Shloka & Names) -->
-    <section class="inv-section" id="sec-welcome">
+    <section class="inv-section" id="sec-welcome" aria-label="Welcome and Auspicious Blessings">
       <!-- Decorative corner florals -->
-      <div class="section-decor corner-floral tl">🌺</div>
-      <div class="section-decor corner-floral tr">🌺</div>
-      <div class="section-decor corner-floral bl">🌸</div>
-      <div class="section-decor corner-floral br">🌸</div>
+      <div class="section-decor corner-floral tl" aria-hidden="true">ðŸŒº</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">ðŸŒº</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">ðŸŒ¸</div>
       <!-- Side vine decorations -->
-      <div class="section-decor vine-left"></div>
-      <div class="section-decor vine-right"></div>
+      <div class="section-decor vine-left" aria-hidden="true"></div>
+      <div class="section-decor vine-right" aria-hidden="true"></div>
       <div class="section-inner">
         <div class="floral-border welcome-card-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           
-          <img class="welcome-ganesha" src="images/ganesha.webp" alt="Ganesha" />
+          <img class="welcome-ganesha" src="images/ganesha.webp" alt="Lord Ganesha" width="1024" height="1024" decoding="async" loading="lazy" />
           
           <div class="shloka-container">
-            <p class="shloka-line">॥ श्री गणेशाय नमः ॥</p>
-            <p class="shloka-text">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥</p>
+            <p class="shloka-line">à¥¥ à¤¶à¥à¤°à¥€ à¤—à¤£à¥‡à¤¶à¤¾à¤¯ à¤¨à¤®à¤ƒ à¥¥</p>
+            <p class="shloka-text">à¤µà¤•à¥à¤°à¤¤à¥à¤£à¥à¤¡ à¤®à¤¹à¤¾à¤•à¤¾à¤¯ à¤¸à¥‚à¤°à¥à¤¯à¤•à¥‹à¤Ÿà¤¿ à¤¸à¤®à¤ªà¥à¤°à¤­à¥¤<br>à¤¨à¤¿à¤°à¥à¤µà¤¿à¤˜à¥à¤¨à¤‚ à¤•à¥à¤°à¥ à¤®à¥‡ à¤¦à¥‡à¤µ à¤¸à¤°à¥à¤µà¤•à¤¾à¤°à¥à¤¯à¥‡à¤·à¥ à¤¸à¤°à¥à¤µà¤¦à¤¾à¥¥</p>
           </div>
           
           <p class="welcome-invite-text" id="welcome-invite-text"></p>
           
           <div class="couple-names-container">
             <h2 class="bride-name" id="bride-name"></h2>
-            <p class="welcome-ampersand">&amp;</p>
+            <p class="welcome-ampersand" aria-hidden="true">&amp;</p>
             <h2 class="groom-name" id="groom-name"></h2>
           </div>
           
@@ -237,29 +282,29 @@
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">🌸</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌺</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌸</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸŒ¸</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒº</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒ¸</span>
     </div>
 
     <!-- Section: Couple Photo -->
-    <section class="inv-section" id="sec-couple-photo">
-      <div class="section-decor corner-floral tl">❀</div>
-      <div class="section-decor corner-floral tr">❀</div>
-      <div class="section-decor corner-floral bl">✿</div>
-      <div class="section-decor corner-floral br">✿</div>
-      <div class="section-decor peacock-left">🦚</div>
-      <div class="section-decor peacock-right">🦚</div>
+    <section class="inv-section" id="sec-couple-photo" aria-label="The Happy Couple">
+      <div class="section-decor corner-floral tl" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">âœ¿</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">âœ¿</div>
+      <div class="section-decor peacock-left" aria-hidden="true">ðŸ¦š</div>
+      <div class="section-decor peacock-right" aria-hidden="true">ðŸ¦š</div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           <h2 class="section-heading">The Happy Couple</h2>
           <div class="couple-photo-frame">
-            <img id="couple-photo" class="couple-photo" src="images/couple.webp" alt="Couple" loading="lazy" />
+            <img id="couple-photo" class="couple-photo" src="images/couple.webp" alt="Dhwani and Amey" width="1024" height="1024" decoding="async" loading="lazy" />
           </div>
           <p class="couple-tagline" id="couple-tagline"></p>
         </div>
@@ -267,67 +312,65 @@
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">💮</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">🏵️</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">💮</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸ’®</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸµï¸</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸ’®</span>
     </div>
 
     <!-- Section: Save The Date (Scratch Card) -->
-    <section class="inv-section" id="sec-save-the-date">
-      <div class="section-decor corner-floral tl">🌸</div>
-      <div class="section-decor corner-floral tr">🌸</div>
-      <div class="section-decor corner-floral bl">🌺</div>
-      <div class="section-decor corner-floral br">🌺</div>
-      <div class="section-decor elephant-deco left">🐘</div>
-      <div class="section-decor elephant-deco right">🐘</div>
+    <section class="inv-section" id="sec-save-the-date" aria-label="Save The Date">
+      <div class="section-decor corner-floral tl" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">ðŸŒº</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">ðŸŒº</div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
-          <p class="inv-label">✦ Save The Date ✦</p>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
+          <p class="inv-label">âœ¦ Save The Date âœ¦</p>
 
           <!-- Scratch card area -->
-          <div class="scratch-card" id="scratch-card">
+          <div class="scratch-card" id="scratch-card" role="region" aria-label="Interactive scratch card">
             <!-- The hidden date revealed after scratching -->
             <div class="scratch-reveal" id="scratch-reveal">
               <p class="scratch-date-day" id="scratch-day"></p>
               <p class="scratch-date-full" id="scratch-date"></p>
             </div>
             <!-- Canvas overlay the user scratches away -->
-            <canvas id="scratch-canvas" class="scratch-canvas"></canvas>
+            <canvas id="scratch-canvas" class="scratch-canvas" aria-label="Scratch this area to reveal date"></canvas>
           </div>
-          <p class="scratch-hint" id="scratch-hint">✦ Scratch to reveal the date ✦</p>
+          <p class="scratch-hint" id="scratch-hint">âœ¦ Scratch to reveal the date âœ¦</p>
         </div>
       </div>
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">🌸</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌺</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌸</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸŒ¸</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒº</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒ¸</span>
     </div>
 
     <!-- Section: Countdown Timer -->
-    <section class="inv-section" id="sec-countdown">
-      <div class="section-decor corner-floral tl">❀</div>
-      <div class="section-decor corner-floral tr">❀</div>
-      <div class="section-decor corner-floral bl">❀</div>
-      <div class="section-decor corner-floral br">❀</div>
+    <section class="inv-section" id="sec-countdown" aria-label="Wedding Countdown">
+      <div class="section-decor corner-floral tl" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">â€</div>
       <!-- Mandap dome decoration -->
-      <div class="section-decor mandap-top">🛕</div>
+      <div class="section-decor mandap-top" aria-hidden="true">ðŸ›•</div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           <h2 class="section-heading">Counting Down To The Big Day</h2>
           <p class="countdown-subtitle" id="countdown-target-date"></p>
-          <div class="countdown-grid" id="countdown-grid">
+          <div class="countdown-grid" id="countdown-grid" role="timer" aria-live="off">
             <div class="countdown-box">
               <span class="countdown-value" id="cd-months">00</span>
               <span class="countdown-label">Months</span>
@@ -349,33 +392,32 @@
               <span class="countdown-label">Seconds</span>
             </div>
           </div>
-          <p class="countdown-tagline">✦ Every second brings us closer ✦</p>
+          <p class="countdown-tagline">âœ¦ Every second brings us closer âœ¦</p>
         </div>
       </div>
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">💮</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">🏵️</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">💮</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸ’®</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸµï¸</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸ’®</span>
     </div>
 
-
     <!-- Section: Events -->
-    <section class="inv-section" id="sec-events">
-      <div class="section-decor corner-floral tl">🌸</div>
-      <div class="section-decor corner-floral tr">🌸</div>
-      <div class="section-decor corner-floral bl">🌺</div>
-      <div class="section-decor corner-floral br">🌺</div>
-      <div class="section-decor vine-left"></div>
-      <div class="section-decor vine-right"></div>
+    <section class="inv-section" id="sec-events" aria-label="Wedding Events and Celebrations">
+      <div class="section-decor corner-floral tl" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">ðŸŒº</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">ðŸŒº</div>
+      <div class="section-decor vine-left" aria-hidden="true"></div>
+      <div class="section-decor vine-right" aria-hidden="true"></div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           <h2 class="section-heading">Wedding Celebrations</h2>
           <div class="events-grid" id="events-grid"></div>
         </div>
@@ -383,22 +425,22 @@
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">🌸</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌺</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌸</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸŒ¸</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒº</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒ¸</span>
     </div>
 
     <!-- Section: Venue -->
-    <section class="inv-section" id="sec-venue">
-      <div class="section-decor corner-floral tl">❀</div>
-      <div class="section-decor corner-floral tr">❀</div>
-      <div class="section-decor corner-floral bl">✿</div>
-      <div class="section-decor corner-floral br">✿</div>
-      <div class="section-decor peacock-left">🦚</div>
-      <div class="section-decor peacock-right">🦚</div>
+    <section class="inv-section" id="sec-venue" aria-label="Wedding Venue & Directions">
+      <div class="section-decor corner-floral tl" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">âœ¿</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">âœ¿</div>
+      <div class="section-decor peacock-left" aria-hidden="true">ðŸ¦š</div>
+      <div class="section-decor peacock-right" aria-hidden="true">ðŸ¦š</div>
       <div class="section-inner venue-section-inner">
         <h2 class="section-heading" id="venue-heading">Wedding Venue</h2>
         <p class="venue-subtitle">We look forward to celebrating this special day with you.</p>
@@ -407,26 +449,26 @@
           <!-- Left: Palace Venue Card -->
           <div class="venue-card-wrapper">
             <!-- Floral ornaments at corners -->
-            <div class="venue-floral top-left">❀</div>
-            <div class="venue-floral top-right">❀</div>
-            <div class="venue-floral bottom-left">❀</div>
-            <div class="venue-floral bottom-right">❀</div>
+            <div class="venue-floral top-left" aria-hidden="true">â€</div>
+            <div class="venue-floral top-right" aria-hidden="true">â€</div>
+            <div class="venue-floral bottom-left" aria-hidden="true">â€</div>
+            <div class="venue-floral bottom-right" aria-hidden="true">â€</div>
             
             <div class="venue-card-royal">
               <!-- Palace Arch Venue Photo -->
               <div class="venue-photo-container">
-                <img id="venue-photo" class="venue-photo" src="images/venue.webp" alt="Venue" loading="lazy" />
-                <div class="venue-light-glow"></div>
+                <img id="venue-photo" class="venue-photo" src="images/venue.webp" alt="Wedding Venue" width="1024" height="1024" decoding="async" loading="lazy" />
+                <div class="venue-light-glow" aria-hidden="true"></div>
               </div>
               
               <div class="venue-info">
                 <!-- Animated Location Pin Icon -->
                 <div class="venue-pin-container">
-                  <div class="venue-pin-glow"></div>
-                  <span class="venue-pin-icon">📍</span>
+                  <div class="venue-pin-glow" aria-hidden="true"></div>
+                  <span class="venue-pin-icon" aria-hidden="true">ðŸ“</span>
                 </div>
                 
-                <h3 class="venue-title" id="venue-name-display">Rajvee & Kushal Wedding Venue</h3>
+                <h3 class="venue-title" id="venue-name-display">Dhwani &amp; Amey Wedding Venue</h3>
                 
                 <address class="venue-address-display" id="venue-address-display">
                   JK Mehta Rd,<br>
@@ -435,8 +477,8 @@
                   Maharashtra 400054
                 </address>
                 
-                <a class="venue-directions-btn" href="https://www.google.com/maps/dir/?api=1&destination=JK+Mehta+Rd,+Santacruz+(West),+Mumbai,+Maharashtra+400054" target="_blank">
-                  📍 Get Directions
+                <a class="venue-directions-btn" href="https://www.google.com/maps/dir/?api=1&destination=JK+Mehta+Rd,+Santacruz+(West),+Mumbai,+Maharashtra+400054" target="_blank" rel="noopener noreferrer" aria-label="Get Directions on Google Maps">
+                  ðŸ“ Get Directions
                 </a>
               </div>
             </div>
@@ -446,6 +488,7 @@
           <div class="venue-map-container">
             <iframe 
               class="venue-map-iframe"
+              title="Google Map location for wedding venue"
               src="https://maps.google.com/maps?q=JK%20Mehta%20Rd,%20Santacruz%20(West),%20Mumbai,%20Maharashtra%20400054&t=&z=15&ie=UTF8&iwloc=&output=embed" 
               style="border:0;" 
               allowfullscreen="" 
@@ -458,26 +501,24 @@
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">💮</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">🏵️</span>
-      <span class="garland-leaf">🍃</span>
-      <span class="garland-flower">💮</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸ’®</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸµï¸</span>
+      <span class="garland-leaf">ðŸƒ</span>
+      <span class="garland-flower">ðŸ’®</span>
     </div>
 
     <!-- Section: Family -->
-    <section class="inv-section" id="sec-family">
-      <div class="section-decor corner-floral tl">🌸</div>
-      <div class="section-decor corner-floral tr">🌸</div>
-      <div class="section-decor corner-floral bl">🌸</div>
-      <div class="section-decor corner-floral br">🌸</div>
-      <div class="section-decor elephant-deco left">🐘</div>
-      <div class="section-decor elephant-deco right">🐘</div>
+    <section class="inv-section" id="sec-family" aria-label="Family and Blessings">
+      <div class="section-decor corner-floral tl" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">ðŸŒ¸</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">ðŸŒ¸</div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           <h2 class="section-heading">With Blessings Of</h2>
           <div class="family-grid" id="family-grid"></div>
         </div>
@@ -485,36 +526,39 @@
     </section>
 
     <!-- Garland Divider -->
-    <div class="garland-divider">
-      <span class="garland-flower">🌸</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌺</span>
-      <span class="garland-leaf">🌿</span>
-      <span class="garland-flower">🌸</span>
+    <div class="garland-divider" aria-hidden="true">
+      <span class="garland-flower">ðŸŒ¸</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒº</span>
+      <span class="garland-leaf">ðŸŒ¿</span>
+      <span class="garland-flower">ðŸŒ¸</span>
     </div>
 
     <!-- Section: Invitation Message -->
-    <section class="inv-section" id="sec-message">
-      <div class="section-decor corner-floral tl">❀</div>
-      <div class="section-decor corner-floral tr">❀</div>
-      <div class="section-decor corner-floral bl">✿</div>
-      <div class="section-decor corner-floral br">✿</div>
-      <div class="section-decor vine-left"></div>
-      <div class="section-decor vine-right"></div>
+    <section class="inv-section" id="sec-message" aria-label="Personal Invitation Message">
+      <div class="section-decor corner-floral tl" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral tr" aria-hidden="true">â€</div>
+      <div class="section-decor corner-floral bl" aria-hidden="true">âœ¿</div>
+      <div class="section-decor corner-floral br" aria-hidden="true">âœ¿</div>
+      <div class="section-decor vine-left" aria-hidden="true"></div>
+      <div class="section-decor vine-right" aria-hidden="true"></div>
       <div class="section-inner">
         <div class="floral-border">
-          <div class="ornament orn-top"></div>
-          <div class="ornament orn-bottom"></div>
+          <div class="ornament orn-top" aria-hidden="true"></div>
+          <div class="ornament orn-bottom" aria-hidden="true"></div>
           <p class="invitation-msg" id="invitation-msg"></p>
         </div>
-        <p class="footer-blessing">♥ We can't wait to celebrate with you ♥</p>
+        <p class="footer-blessing">â™¥ We can't wait to celebrate with you â™¥</p>
       </div>
     </section>
 
-  </div>
+  </main>
 
-  <!-- GSAP Animation Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="script.js"></script>
+  <!-- GSAP Animation Library & Application Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
+
+
+
