@@ -17,10 +17,10 @@ const CONFIG = {
   couplePhoto: "images/couple.webp",   // Replace with your engagement photo
 
   // ── Wedding Date & Time ─────────────────────────────
-  weddingDay: "Wednesday",
-  weddingDate: "10th February 2027",
+  weddingDay: "Tuesday",
+  weddingDate: "3rd February 2027",
   weddingTime: "7:00 PM Onwards",
-  weddingDateISO: "2027-02-10T19:00:00",  // Used for countdown timer
+  weddingDateISO: "2027-02-03T19:00:00",  // Used for countdown timer
 
   // ── Venue ───────────────────────────────────────────
   venueName: "Dhwani & Amey Wedding Venue",
@@ -33,28 +33,28 @@ const CONFIG = {
     {
       emoji: "🎨",
       name: "Mehendi",
-      date: "8th February 2027",
+      date: "1st February 2027",
       time: "4:00 PM",
       location: "Bride's Residence",
     },
     {
       emoji: "🎶",
       name: "Sangeet",
-      date: "9th February 2027",
+      date: "2nd February 2027",
       time: "7:00 PM",
       location: "The Grand Ballroom",
     },
     {
       emoji: "💍",
       name: "Wedding Ceremony",
-      date: "10th February 2027",
+      date: "3rd February 2027",
       time: "7:00 PM",
       location: "The Royal Palace Grounds",
     },
     {
       emoji: "🎉",
       name: "Reception",
-      date: "11th February 2027",
+      date: "4th February 2027",
       time: "8:00 PM",
       location: "The Grand Ballroom",
     },
